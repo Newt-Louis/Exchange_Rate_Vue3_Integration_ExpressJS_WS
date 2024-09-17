@@ -1,0 +1,14 @@
+# log file
+*.log
+
+#important files
+node_modules/
+.env
+.vscode
+package-lock.json
+
+
+# define rules for personal, other dev when clone should have rules themself
+jsconfig.json
+eslint.config.js
+eslint-plugin-vue.d.ts
