@@ -34,7 +34,7 @@ if (!isProduction) {
     appType: "custom",
     base,
   });
-  // declare for expressjs use vite middleware
+  // // declare for expressjs use vite middleware
   app.use(vite.middlewares);
 } else {
   // if in production use compression and sirv package for expressjs
@@ -50,7 +50,7 @@ if (!isProduction) {
 // API
 app.use("/api", apiIndexRoute);
 
-// Serve HTML
+// // Serve HTML
 app.use("*", async (req, res) => {
   try {
     // req.originalUrl contain only after domain name like localhost:300/about => req.originalUrl = "/about"
