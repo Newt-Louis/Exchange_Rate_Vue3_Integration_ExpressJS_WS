@@ -8,7 +8,7 @@ const port = process.env.PORT || 5173;
 const base = process.env.BASE || "/"; */
 
 // Load values from .env file
-const isProduction = process.env.NODE_ENV === "production";
+const isProduction = process.env.NODE_ENV === "PRODUCTION";
 const port = process.env.PORT;
 const base = process.env.BASE;
 
@@ -34,7 +34,6 @@ if (!isProduction) {
     appType: "custom",
     base,
   });
-
   // declare for expressjs use vite middleware
   app.use(vite.middlewares);
 } else {

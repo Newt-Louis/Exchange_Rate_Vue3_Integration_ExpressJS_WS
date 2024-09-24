@@ -9,7 +9,7 @@ export async function srapACB() {
   await page.goto(testLink);
   const selectResults = ".list-ty-ga .hide-mb";
   const elements = await page.evaluate(() => {
-    const anchors = document.querySelectorAll("a");
+    const anchors = document.querySelectorAll("a").innerText;
     return anchors;
   });
   // await page.waitForSelector(selectResults);
