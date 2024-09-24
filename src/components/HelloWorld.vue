@@ -1,11 +1,23 @@
 <script setup>
   import { ref } from "vue";
-
+  import axios from "axios";
   defineProps({
     msg: String,
   });
-
+  const exchangeRates = ref(null);
+  const errorRes = ref(null);
   const count = ref(0);
+  const getPuppeteerData = async () => {
+    await axios
+      .post("/api/acb-exchange-rate")
+      .then(response => {
+        exchangeRates.value = response.data;
+        console.log(response);
+      })
+      .catch(error => {
+        errorRes.value = error;
+      });
+  };
 </script>
 
 <template>
@@ -13,23 +25,15 @@
 
   <div class="card">
     <button type="button" @click="count++">count is {{ count }}</button>
-    <p>
-      Edit
-      <code>components/HelloWorld.vue</code> to test HMR
-    </p>
+    <button type="button" @click="getPuppeteerData">Test Puppeteer</button>
   </div>
 
   <p>
-    Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank">create-vue</a>, the official Vue + Vite
-    starter
+    {{ "dữ liệu được lấy về : " + exchangeRates }}
   </p>
   <p>
-    Install
-    <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
-    in your IDE for a better DX
+    {{ "đang có lỗi :" + errorRes }}
   </p>
-  <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
 </template>
 
 <style scoped>

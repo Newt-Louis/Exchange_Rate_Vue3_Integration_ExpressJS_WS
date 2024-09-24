@@ -1,7 +1,7 @@
 import "dotenv/config";
 import fs from "node:fs/promises";
 import express from "express";
-import { startBrowser } from "./browser.js";
+import apiIndexRoute from "./apiresource/index.api.js";
 // Constants
 /* const isProduction = process.env.NODE_ENV === "production";
 const port = process.env.PORT || 5173;
@@ -48,6 +48,8 @@ if (!isProduction) {
   app.use(compression());
   app.use(base, sirv("./dist/client", { extensions: [] }));
 }
+// API
+app.use("/api", apiIndexRoute);
 
 // Serve HTML
 app.use("*", async (req, res) => {
@@ -87,14 +89,4 @@ app.use("*", async (req, res) => {
 // Start http server
 app.listen(port, async () => {
   console.log(`Server started at http://localhost:${port}`);
-  try {
-    const browser = await startBrowser();
-    if (!browser) {
-      console.log("không khởi động được trình duyệt");
-    } else {
-      global.browser = browser;
-    }
-  } catch (error) {
-    console.log(error);
-  }
 });
