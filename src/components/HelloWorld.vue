@@ -29,7 +29,7 @@
   </div>
 
   <p>
-    {{ "dữ liệu được lấy về : " + exchangeRates }}
+    {{ "dữ liệu được lấy về : " + JSON.stringify(exchangeRates) }}
   </p>
   <p>
     {{ "đang có lỗi :" + errorRes }}

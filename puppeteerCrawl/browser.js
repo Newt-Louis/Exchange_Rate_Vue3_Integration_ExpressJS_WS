@@ -7,10 +7,10 @@ export async function startBrowser() {
       executablePath: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
       headless: false,
       args: ["--disable-setuid-sandbox", "--disable-extensions"],
-      ignoredHTTPSErrors: true,
+      ignoreHTTPSErrors: true,
     });
   } catch (err) {
-    console.log(err);
+    console.log(`Có lỗi xảy ra ở instance browser` + err);
   }
   return browser;
 }
