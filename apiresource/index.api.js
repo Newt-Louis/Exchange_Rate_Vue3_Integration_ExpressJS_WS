@@ -5,8 +5,8 @@ const apiIndexRoute = express.Router();
 
 apiIndexRoute.post("/acb-exchange-rate", async function (req, res, next) {
   const scrapData = await srapACB();
-  console.log(scrapData);
-  res.send(scrapData);
+  console.log("route hoạt động");
+  // res.send(scrapData);
 });
 
 export default apiIndexRoute;
