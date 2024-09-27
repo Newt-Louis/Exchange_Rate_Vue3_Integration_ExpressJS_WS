@@ -1,5 +1,5 @@
 import "./style.css";
-import { createApp } from "./main";
+import { createApp } from "./main.mjs";
 
 const { app } = createApp();
 

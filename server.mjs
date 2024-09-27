@@ -1,7 +1,7 @@
 import "dotenv/config";
 import fs from "node:fs/promises";
 import express from "express";
-import apiIndexRoute from "./apiresource/index.api.js";
+import apiIndexRoute from "./apiresource/index.api.mjs";
 // Constants
 /* const isProduction = process.env.NODE_ENV === "production";
 const port = process.env.PORT || 5173;
@@ -64,11 +64,11 @@ app.use("*", async (req, res) => {
       template = await fs.readFile("./index.html", "utf-8");
       template = await vite.transformIndexHtml(url, template);
       // load module for vue application like nomal vuejs used to have like router, axios, pinia, v.v....
-      render = (await vite.ssrLoadModule("/src/entry-server.js")).render;
+      render = (await vite.ssrLoadModule("/src/entry-server.mjs")).render;
     } else {
       // the same things on development but this is in the production
       template = templateHtml;
-      render = (await import("./dist/server/entry-server.js")).render;
+      render = (await import("./dist/server/entry-server.mjs")).render;
     }
 
     const rendered = await render(url, ssrManifest);

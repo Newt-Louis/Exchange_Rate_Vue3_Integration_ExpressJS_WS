@@ -1,5 +1,5 @@
 import { renderToString } from "vue/server-renderer";
-import { createApp } from "./main";
+import { createApp } from "./main.mjs";
 
 export async function render() {
   const { app } = createApp();

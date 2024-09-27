@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev:express": "nodemon server.js",
-    "dev:websocket": "nodemon serverWebsocket.js",
+    "dev:express": "nodemon server.mjs",
+    "dev:websocket": "nodemon serverWebsocket.mjs",
     "dev":"concurrently \"npm run dev:express\" \"npm run dev:websocket\"",
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build --ssrManifest --outDir dist/client",

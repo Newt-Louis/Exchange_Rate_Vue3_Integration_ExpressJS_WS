@@ -1,4 +1,4 @@
-import { startBrowser } from "./browser.js";
+import { startBrowser } from "./browser.mjs";
 
 export async function srapACB() {
   /* required variables */
