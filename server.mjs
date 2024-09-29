@@ -4,6 +4,8 @@ import express from "express";
 import apiIndexRoute from "./apiresource/index.api.mjs";
 import { createServer } from "node:http";
 import { WebSocketServer } from "ws";
+import { scrapVCB } from "./puppeteerCrawl/scrapperVCB.ppt.mjs";
+import { scrapACB } from "./puppeteerCrawl/scrapperACB.ppt.mjs";
 // Constants
 /* const isProduction = process.env.NODE_ENV === "production";
 const port = process.env.PORT || 5173;
@@ -25,7 +27,7 @@ const ssrManifest = isProduction ? await fs.readFile("./dist/client/.vite/ssr-ma
 // Create http server
 const app = express();
 const server = createServer(app);
-const wss = new WebSocketServer({ server });
+const wss = new WebSocketServer({ port: 3001 });
 // Add Vite or respective production middlewares
 let vite;
 if (!isProduction) {
@@ -88,9 +90,12 @@ app.use("*", async (req, res) => {
   }
 });
 // Start Websocket Server
-wss.on("connection", ws => {
+wss.on("connection", async (ws, request) => {
   console.log("Websocket is on with express server !!!");
-  ws.send("welcome new client !");
+  const dataACB = await scrapACB();
+  ws.send(JSON.stringify(dataACB), err => {
+    console.log(err);
+  });
   ws.on("message", function incomming(message) {
     console.log(`received ` + message);
   });

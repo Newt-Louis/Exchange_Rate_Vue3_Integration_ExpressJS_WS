@@ -20,7 +20,7 @@
       });
   };
   onMounted(() => {
-    ws.value = new WebSocket("ws://localhost:3000");
+    ws.value = new WebSocket("ws://localhost:3001");
     ws.value.onopen = () => {
       console.log("connected to websocket server");
     };

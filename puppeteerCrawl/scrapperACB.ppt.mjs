@@ -1,6 +1,6 @@
 import { startBrowser } from "./browser.mjs";
 
-export async function srapACB() {
+export async function scrapACB() {
   /* required variables */
   /* create new instance puppeteer and open Chromium */
   const browser = await startBrowser();
