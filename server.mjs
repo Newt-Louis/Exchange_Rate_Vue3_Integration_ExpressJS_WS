@@ -2,6 +2,8 @@ import "dotenv/config";
 import fs from "node:fs/promises";
 import express from "express";
 import apiIndexRoute from "./apiresource/index.api.mjs";
+import { createServer } from "node:http";
+import { WebSocketServer } from "ws";
 // Constants
 /* const isProduction = process.env.NODE_ENV === "production";
 const port = process.env.PORT || 5173;
@@ -22,7 +24,8 @@ const ssrManifest = isProduction ? await fs.readFile("./dist/client/.vite/ssr-ma
 
 // Create http server
 const app = express();
-
+const server = createServer(app);
+const wss = new WebSocketServer({ server });
 // Add Vite or respective production middlewares
 let vite;
 if (!isProduction) {
@@ -84,8 +87,16 @@ app.use("*", async (req, res) => {
     res.status(500).end(e.stack);
   }
 });
+// Start Websocket Server
+wss.on("connection", ws => {
+  console.log("Websocket is on with express server !!!");
+  ws.send("welcome new client !");
+  ws.on("message", function incomming(message) {
+    console.log(`received ` + message);
+  });
+});
 
 // Start http server
-app.listen(port, async () => {
+server.listen(port, async () => {
   console.log(`Server started at http://localhost:${port}`);
 });

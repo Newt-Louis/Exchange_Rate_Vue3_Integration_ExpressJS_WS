@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "dev:express": "nodemon server.mjs",
-    "dev:websocket": "nodemon serverWebsocket.mjs",
-    "dev":"concurrently \"npm run dev:express\" \"npm run dev:websocket\"",
+    "dev":"concurrently \"npm run dev:express\"",
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build --ssrManifest --outDir dist/client",
     "build:server": "vite build --ssr src/entry-server.js --outDir dist/server",

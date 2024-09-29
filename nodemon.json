@@ -1,4 +1,4 @@
 {
-  "watch":["server.js","serverWebsocket.js","puppeteerCrawl/*","apiresource/*","route/*"],
+  "watch":["server.js","puppeteerCrawl/*","apiresource/*","route/*"],
   "legacyWatch": true
 }
