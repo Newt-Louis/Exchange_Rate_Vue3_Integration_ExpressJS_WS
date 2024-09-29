@@ -87,6 +87,6 @@ export async function srapACB() {
     accumulator.push(newObject);
     return accumulator;
   }, []);
-
+  await browser.close();
   return { result };
 }

@@ -17,7 +17,31 @@ export async function scrapVCB() {
   for (let index = 0; index < getAllDescendants.length; index++) {
     const getTitle = await getAllDescendants[index].$("td:nth-child(1)");
     const title = await getTitle.evaluate(value => value.textContent);
-    dataVCB.push(title);
+    dataVCB.push([title]);
   }
-  return { dataVCB };
+  for (let index = 0; index < getAllDescendants.length; index++) {
+    const tdElements = await getAllDescendants[index].$$("td:not(:first-child)");
+    const tdValues = tdElements.map(async element => {
+      return await element.evaluate(value => value.textContent);
+    });
+    const temptArray = await Promise.all(tdValues);
+    dataVCB[index].push(...temptArray);
+  }
+  /* transform array */
+  for (let index = 0; index < dataVCB.length; index++) {
+    dataVCB[index].splice(1, 1);
+    let temptLastValue = dataVCB[index][dataVCB[index].length - 1];
+    dataVCB[index].push(temptLastValue);
+  }
+  /* Transform nested array to array of objects */
+  const result = dataVCB.reduce((accumulator, currentRow) => {
+    const newObject = {};
+    keysObject.forEach((key, index) => {
+      newObject[key] = currentRow[index];
+    });
+    accumulator.push(newObject);
+    return accumulator;
+  }, []);
+  await browser.close();
+  return { result };
 }
