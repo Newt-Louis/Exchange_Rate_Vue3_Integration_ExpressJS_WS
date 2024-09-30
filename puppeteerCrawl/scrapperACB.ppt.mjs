@@ -88,5 +88,5 @@ export async function scrapACB() {
     return accumulator;
   }, []);
   await browser.close();
-  return { result };
+  return result;
 }

@@ -26,7 +26,7 @@ const ssrManifest = isProduction ? await fs.readFile("./dist/client/.vite/ssr-ma
 
 // Create http server
 const app = express();
-const server = createServer(app);
+// const server = createServer(app);
 const wss = new WebSocketServer({ port: 3001 });
 // Add Vite or respective production middlewares
 let vite;
@@ -93,15 +93,27 @@ app.use("*", async (req, res) => {
 wss.on("connection", async (ws, request) => {
   console.log("Websocket is on with express server !!!");
   const dataACB = await scrapACB();
-  ws.send(JSON.stringify(dataACB), err => {
-    console.log(err);
-  });
+  const dataVCB = await scrapVCB();
+  ws.send(JSON.stringify(["ACB", dataACB]));
+  ws.send(JSON.stringify(["VCB", dataVCB]));
   ws.on("message", function incomming(message) {
-    console.log(`received ` + message);
+    if (message === "ping") {
+      const serverTimeStamp = Date.now();
+      ws.send(JSON.stringify({ type: "pong", timestamp: toString(serverTimeStamp) }));
+    }
   });
 });
+// Emitted when the underlying server has been bound. It's triggered only once when server established
+wss.on("listening", () => {});
 
+// When an error occur, emit notification and close connection
+wss.on("error", error => {
+  console.log("Websocket Server Error: " + error);
+  wss.close(err => {
+    console.log(`Server had undefined Error ${err}`);
+  });
+});
 // Start http server
-server.listen(port, async () => {
+app.listen(port, async () => {
   console.log(`Server started at http://localhost:${port}`);
 });

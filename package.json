@@ -4,8 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev:express": "nodemon server.mjs",
-    "dev":"concurrently \"npm run dev:express\"",
+    "dev": "nodemon server.mjs",
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build --ssrManifest --outDir dist/client",
     "build:server": "vite build --ssr src/entry-server.js --outDir dist/server",
@@ -15,6 +14,7 @@
     "axios": "^1.7.7",
     "compression": "^1.7.4",
     "express": "^4.19.2",
+    "pinia": "^2.2.2",
     "puppeteer-core": "^23.3.1",
     "sirv": "^2.0.4",
     "vue": "^3.4.23",
@@ -29,6 +29,7 @@
     "eslint": "^9.10.0",
     "eslint-plugin-vue": "^9.28.0",
     "globals": "^15.9.0",
+    "nodemon": "^3.1.7",
     "vite": "^5.2.10"
   }
 }

@@ -1,11 +1,15 @@
 <script setup>
-  // This starter template is using Vue 3 <script setup> SFCs
-  // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-  import HelloWorld from "./components/HelloWorld.vue";
+  import { onBeforeMount } from "vue";
+  import HomePage from "./components/HomePage.vue";
+  import { useWebSocketStore } from "./stores/websocket.store.mjs";
+
+  onBeforeMount(() => {
+    useWebSocketStore().connect();
+  });
 </script>
 
 <template>
-  <HelloWorld msg="Vite + Vue" />
+  <HomePage msg="Vite + Vue" />
 </template>
 
 <style scoped></style>

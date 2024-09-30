@@ -43,5 +43,5 @@ export async function scrapVCB() {
     return accumulator;
   }, []);
   await browser.close();
-  return { result };
+  return result;
 }
