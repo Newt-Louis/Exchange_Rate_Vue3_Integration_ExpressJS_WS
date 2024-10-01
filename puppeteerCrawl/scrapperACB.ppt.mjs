@@ -79,7 +79,7 @@ export async function scrapACB() {
   }
 
   /* Transform nested array to array of objects */
-  const result = dataACB.reduce((accumulator, currentRow) => {
+  const arrayObject = dataACB.reduce((accumulator, currentRow) => {
     const newObject = {};
     keysObject.forEach((key, index) => {
       newObject[key] = currentRow[index];
@@ -88,5 +88,7 @@ export async function scrapACB() {
     return accumulator;
   }, []);
   await browser.close();
+
+  const result = { bank: "ACB", data: arrayObject };
   return result;
 }

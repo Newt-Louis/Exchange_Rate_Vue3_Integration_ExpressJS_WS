@@ -34,7 +34,7 @@ export async function scrapVCB() {
     dataVCB[index].push(temptLastValue);
   }
   /* Transform nested array to array of objects */
-  const result = dataVCB.reduce((accumulator, currentRow) => {
+  const arrayObject = dataVCB.reduce((accumulator, currentRow) => {
     const newObject = {};
     keysObject.forEach((key, index) => {
       newObject[key] = currentRow[index];
@@ -43,5 +43,7 @@ export async function scrapVCB() {
     return accumulator;
   }, []);
   await browser.close();
+
+  const result = { bank: "VCB", data: arrayObject };
   return result;
 }

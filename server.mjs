@@ -1,6 +1,6 @@
 import "dotenv/config";
-import fs from "node:fs/promises";
 import express from "express";
+import fs, { readFile, writeFile } from "node:fs/promises";
 import apiIndexRoute from "./apiresource/index.api.mjs";
 import { createServer } from "node:http";
 import { WebSocketServer } from "ws";
@@ -89,13 +89,41 @@ app.use("*", async (req, res) => {
     res.status(500).end(e.stack);
   }
 });
+async function writeCrawlFile(data) {
+  const path = "./data/crawldata.json";
+  const jsondata = JSON.stringify(data);
+  const currentDataFile = readFile(path, "utf-8");
+  const dataToAdd = (await currentDataFile).concat(jsondata);
+  try {
+    await writeFile(path, dataToAdd);
+    console.log("ghi file thành công");
+  } catch (error) {
+    console.log("có lỗi khi ghi file" + error);
+  }
+}
+async function readCrawlFile() {
+  const path = "./data/crawldata.json";
+  const objectdata = [];
+
+  fs.readFile(path, (err, data) => {
+    if (err) {
+      return console.log("có lỗi khi đọc file" + err);
+    }
+    return (objectdata = JSON.parse(data));
+  });
+  return objectdata;
+}
 // Start Websocket Server
 wss.on("connection", async (ws, request) => {
   console.log("Websocket is on with express server !!!");
-  const dataACB = await scrapACB();
-  const dataVCB = await scrapVCB();
-  ws.send(JSON.stringify(["ACB", dataACB]));
-  ws.send(JSON.stringify(["VCB", dataVCB]));
+  // Both writeFile and puppeteer need to be called as async/await, if don't they will only catch null data
+  // const dataACB = await scrapACB();
+  // const dataVCB = await scrapVCB();
+  // await writeCrawlFile(dataACB);
+  // await writeCrawlFile(dataVCB);
+
+  // ws.send(JSON.stringify(["ACB", dataACB]));
+  // ws.send(JSON.stringify(["VCB", dataVCB]));
   ws.on("message", function incomming(message) {
     if (message === "ping") {
       const serverTimeStamp = Date.now();
