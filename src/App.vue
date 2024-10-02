@@ -7,9 +7,9 @@
     useWebSocketStore().connect();
   });
 
-  onUnmounted(() => {
-    useWebSocketStore().disconnect();
-  });
+  // onUnmounted(() => {
+  //   useWebSocketStore().disconnect();
+  // });
 </script>
 
 <template>

@@ -6,6 +6,7 @@ import { createServer } from "node:http";
 import { WebSocketServer } from "ws";
 import { scrapVCB } from "./puppeteerCrawl/scrapperVCB.ppt.mjs";
 import { scrapACB } from "./puppeteerCrawl/scrapperACB.ppt.mjs";
+import { error } from "node:console";
 // Constants
 /* const isProduction = process.env.NODE_ENV === "production";
 const port = process.env.PORT || 5173;
@@ -96,22 +97,20 @@ async function writeCrawlFile(data) {
   const dataToAdd = (await currentDataFile).concat(jsondata);
   try {
     await writeFile(path, dataToAdd);
-    console.log("ghi file thành công");
   } catch (error) {
     console.log("có lỗi khi ghi file" + error);
   }
 }
 async function readCrawlFile() {
   const path = "./data/crawldata.json";
-  const objectdata = [];
-
-  fs.readFile(path, (err, data) => {
-    if (err) {
-      return console.log("có lỗi khi đọc file" + err);
-    }
-    return (objectdata = JSON.parse(data));
-  });
-  return objectdata;
+  let jsondata = "";
+  try {
+    jsondata = await readFile(path, { encoding: "utf-8" });
+  } catch (error) {
+    jsondata = "Lỗi khi lấy dữ liệu !";
+    console.log("có lỗi khi đọc file" + error);
+  }
+  return jsondata;
 }
 // Start Websocket Server
 wss.on("connection", async (ws, request) => {
@@ -124,11 +123,25 @@ wss.on("connection", async (ws, request) => {
 
   // ws.send(JSON.stringify(["ACB", dataACB]));
   // ws.send(JSON.stringify(["VCB", dataVCB]));
+  let crawlData;
+  const serverTimestamp = JSON.stringify({ type: "ping", timestamp: Date.now() });
+  try {
+    crawlData = await readCrawlFile();
+  } catch (error) {
+    console.log("có lỗi đọc file khi websocket server thành lập");
+  }
+  ws.send(crawlData);
   ws.on("message", function incomming(message) {
-    if (message === "ping") {
-      const serverTimeStamp = Date.now();
-      ws.send(JSON.stringify({ type: "pong", timestamp: toString(serverTimeStamp) }));
+    console.log(message);
+  });
+  ws.ping("", false, error => {
+    ws.send(serverTimestamp);
+    if (error) {
+      console.log("Lỗi khi gửi ping " + error);
     }
+  });
+  ws.on("pong", () => {
+    console.log("nhận được pong từ client");
   });
 });
 // Emitted when the underlying server has been bound. It's triggered only once when server established
