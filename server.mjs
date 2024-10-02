@@ -132,22 +132,22 @@ wss.on("connection", async (ws, request) => {
   ws.on("message", function incomming(message) {
     console.log(message);
   });
-  const serverPing = setInterval(() => {
-    ws.ping("", false, error => {
-      const serverTimestamp = JSON.stringify({ type: "ping", timestamp: Date.now() });
-      ws.send(serverTimestamp);
-      if (error) {
-        console.log("Lỗi khi gửi ping " + error);
-        ws.close(3, "kết nối bị ngắt");
-      }
-    });
-  }, 2000);
-  ws.on("pong", () => {
-    console.log("nhận pong từ client");
-  });
-  ws.on("close", () => {
-    clearInterval(serverPing);
-  });
+  // const serverPing = setInterval(() => {
+  //   ws.ping("", false, error => {
+  //     const serverTimestamp = JSON.stringify({ type: "ping", timestamp: Date.now() });
+  //     ws.send(serverTimestamp);
+  //     if (error) {
+  //       console.log("Lỗi khi gửi ping " + error);
+  //       ws.close(3, "kết nối bị ngắt");
+  //     }
+  //   });
+  // }, 2000);
+  // ws.on("pong", () => {
+  //   console.log("nhận pong từ client");
+  // });
+  // ws.on("close", () => {
+  //   clearInterval(serverPing);
+  // });
 });
 // Emitted when the underlying server has been bound. It's triggered only once when server established
 wss.on("listening", () => {});
