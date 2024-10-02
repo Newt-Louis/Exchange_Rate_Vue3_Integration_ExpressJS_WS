@@ -3,17 +3,17 @@ import { ref, computed } from "vue";
 import { useACBStore } from "./acb.store.mjs";
 import { useVCBStore } from "./vcb.store.mjs";
 export const useWebSocketStore = defineStore("websocket", () => {
-  const ws = ref(new WebSocket("ws://localhost:3001"));
+  const ws = new WebSocket("ws://localhost:3001");
   const isConnected = ref(false);
-  const delay = ref(0);
+  const delay = ref("");
   const acbStore = useACBStore();
   const vcbStore = useVCBStore();
   const connect = () => {
-    ws.value.onopen = () => {
+    ws.onopen = () => {
       isConnected.value = true;
       console.log("Connected to WebSocketServer");
     };
-    ws.value.onmessage = event => {
+    ws.onmessage = event => {
       const data = JSON.parse(event.data);
       console.log(data);
       if (data?.type === "ping") {
@@ -25,26 +25,22 @@ export const useWebSocketStore = defineStore("websocket", () => {
           switch (element.bank) {
             case "ACB":
               acbStore.getACBData(element.data);
-              console.log("dữ liệu acb được nhận");
-
               break;
             case "VCB":
               vcbStore.getVCBData(element.data);
-              console.log("dữ liệu vcb được nhận");
-
               break;
           }
         });
       }
     };
-    ws.value.onerror = error => {
+    ws.onerror = error => {
       console.log("Có lỗi kết nối " + err);
     };
   };
 
   const disconnect = () => {
     if (ws) {
-      return ws.value.close(1, "Component UnMounted");
+      return ws.close(1, "Component UnMounted");
     }
   };
 

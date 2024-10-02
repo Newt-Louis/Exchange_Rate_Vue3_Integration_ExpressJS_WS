@@ -1,5 +1,5 @@
 <script setup>
-  import { computed, onMounted, onUnmounted, ref } from "vue";
+  import { computed, onBeforeMount, onMounted, onUnmounted, ref } from "vue";
   import { useACBStore } from "../stores/acb.store.mjs";
   import { useVCBStore } from "../stores/vcb.store.mjs";
   import { useWebSocketStore } from "../stores/websocket.store.mjs";
@@ -9,10 +9,10 @@
   });
   const vcbStore = useVCBStore();
   const acbStore = useACBStore();
-  let ping;
-  onMounted(() => {
+  const ping = ref("");
+  onBeforeMount(() => {
     const ws = useWebSocketStore();
-    ping = computed(() => {
+    ping.value = computed(() => {
       return ws.delay;
     });
   });

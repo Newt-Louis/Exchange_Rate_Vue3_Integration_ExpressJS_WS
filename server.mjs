@@ -114,7 +114,6 @@ async function readCrawlFile() {
 }
 // Start Websocket Server
 wss.on("connection", async (ws, request) => {
-  console.log("Websocket is on with express server !!!");
   // Both writeFile and puppeteer need to be called as async/await, if don't they will only catch null data
   // const dataACB = await scrapACB();
   // const dataVCB = await scrapVCB();
@@ -124,7 +123,6 @@ wss.on("connection", async (ws, request) => {
   // ws.send(JSON.stringify(["ACB", dataACB]));
   // ws.send(JSON.stringify(["VCB", dataVCB]));
   let crawlData;
-  const serverTimestamp = JSON.stringify({ type: "ping", timestamp: Date.now() });
   try {
     crawlData = await readCrawlFile();
   } catch (error) {
@@ -134,14 +132,21 @@ wss.on("connection", async (ws, request) => {
   ws.on("message", function incomming(message) {
     console.log(message);
   });
-  ws.ping("", false, error => {
-    ws.send(serverTimestamp);
-    if (error) {
-      console.log("Lỗi khi gửi ping " + error);
-    }
-  });
+  const serverPing = setInterval(() => {
+    ws.ping("", false, error => {
+      const serverTimestamp = JSON.stringify({ type: "ping", timestamp: Date.now() });
+      ws.send(serverTimestamp);
+      if (error) {
+        console.log("Lỗi khi gửi ping " + error);
+        ws.close(3, "kết nối bị ngắt");
+      }
+    });
+  }, 2000);
   ws.on("pong", () => {
-    console.log("nhận được pong từ client");
+    console.log("nhận pong từ client");
+  });
+  ws.on("close", () => {
+    clearInterval(serverPing);
   });
 });
 // Emitted when the underlying server has been bound. It's triggered only once when server established
