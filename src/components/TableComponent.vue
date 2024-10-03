@@ -1,81 +1,57 @@
 <template>
-  <div>
-    <a-table :columns="columns" :data-source="data" :scroll="{ x: 1500, y: 1000 }" :pagination="false"> </a-table>
+  <div class="container-table">
+    <table class="table-layout">
+      <thead>
+        <tr>
+          <th><img src="@/imgforeignCurrency/im_flag_usa.svg" alt="USD" /> USD</th>
+          <th><img src="@/imgforeignCurrency/im_flag_eur.svg" alt="EUR" /> EUR</th>
+          <th><img src="@/imgforeignCurrency/im_flag_gbp.svg" alt="GBP" /> GBP</th>
+          <th><img src="@/imgforeignCurrency/im_flag_jpy.svg" alt="JPY" /> JPY</th>
+          <th><img src="@/imgforeignCurrency/im_flag_aud.svg" alt="AUD" /> AUD</th>
+          <th><img src="@/imgforeignCurrency/im_flag_sgd.svg" alt="SGD" /> SGD</th>
+          <th><img src="@/imgforeignCurrency/im_flag_thb.svg" alt="THB" /> THB</th>
+          <th><img src="@/imgforeignCurrency/im_flag_cad.svg" alt="CAD" /> CAD</th>
+          <th><img src="@/imgforeignCurrency/im_flag_chf.svg" alt="CHF" /> CHF</th>
+          <th><img src="@/imgforeignCurrency/im_flag_hkd.svg" alt="HKD" /> HKD</th>
+          <th><img src="@/imgforeignCurrency/im_flag_cny.svg" alt="CNY" /> CNY</th>
+          <th><img src="@/imgforeignCurrency/im_flag_dkk.svg" alt="DKK" /> DKK</th>
+          <th><img src="@/imgforeignCurrency/im_flag_inr.svg" alt="INR" /> INR</th>
+          <th><img src="@/imgforeignCurrency/im_flag_krw.svg" alt="KRW" /> KRW</th>
+          <th><img src="@/imgforeignCurrency/im_flag_kwd.svg" alt="KWD" /> KWD</th>
+          <th><img src="@/imgforeignCurrency/im_flag_myr.svg" alt="MYR" /> MYR</th>
+          <th><img src="@/imgforeignCurrency/im_flag_nok.svg" alt="NOK" /> NOK</th>
+          <th><img src="@/imgforeignCurrency/im_flag_rub.svg" alt="RUB" /> RUB</th>
+          <th><img src="@/imgforeignCurrency/im_flag_sar.svg" alt="SAR" /> SAR</th>
+          <th><img src="@/imgforeignCurrency/im_flag_sek.svg" alt="SEK" /> SEK</th>
+          <th><img src="@/imgforeignCurrency/im_flag_nzd.svg" alt="NZD" /> NZD</th>
+          <th><img src="@/imgforeignCurrency/im_flag_aed.svg" alt="AED" /> AED</th>
+          <th><img src="@/imgforeignCurrency/im_flag_idr.svg" alt="IDR" /> IDR</th>
+          <th><img src="@/imgforeignCurrency/im_flag_khr.svg" alt="KHR" /> KHR</th>
+          <th><img src="@/imgforeignCurrency/im_flag_php.svg" alt="PHP" /> PHP</th>
+          <th><img src="@/imgforeignCurrency/im_flag_try.svg" alt="TRY" /> TRY</th>
+          <th><img src="@/imgforeignCurrency/im_flag_twd.svg" alt="TWD" /> TWD</th>
+          <th><img src="@/imgforeignCurrency/im_flag_zar.svg" alt="ZAR" /> ZAR</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
-<script setup>
-  const columns = [
-    {
-      title: "Full Name",
-      width: 100,
-      dataIndex: "name",
-      key: "name",
-      fixed: "left",
-    },
-    {
-      title: "Age",
-      width: 100,
-      dataIndex: "age",
-      key: "age",
-    },
-    {
-      title: "Column 1",
-      dataIndex: "address",
-      key: "1",
-      width: 150,
-    },
-    {
-      title: "Column 2",
-      dataIndex: "address",
-      key: "2",
-      width: 150,
-    },
-    {
-      title: "Column 3",
-      dataIndex: "address",
-      key: "3",
-      width: 150,
-    },
-    {
-      title: "Column 4",
-      dataIndex: "address",
-      key: "4",
-      width: 150,
-    },
-    {
-      title: "Column 5",
-      dataIndex: "address",
-      key: "5",
-      width: 150,
-    },
-    {
-      title: "Column 6",
-      dataIndex: "address",
-      key: "6",
-      width: 150,
-    },
-    {
-      title: "Column 7",
-      dataIndex: "address",
-      key: "7",
-      width: 150,
-    },
-    {
-      title: "Column 8",
-      dataIndex: "address",
-      key: "8",
-    },
-  ];
-  const data = [];
-  for (let i = 0; i < 10; i++) {
-    data.push({
-      key: i,
-      name: `Edrward ${i}`,
-      age: 32,
-      address: `London Park no. ${i}`,
-    });
-  }
-</script>
+<script setup></script>
 
-<style></style>
+<style>
+  .container-table {
+    overflow: scroll;
+  }
+  .table-layout {
+    width: 1500px;
+  }
+</style>

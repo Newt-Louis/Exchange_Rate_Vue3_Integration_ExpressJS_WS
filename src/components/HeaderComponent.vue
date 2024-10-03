@@ -4,7 +4,7 @@
       <a-col :span="4">Some Link</a-col>
       <a-col :span="4">Some Link</a-col>
       <a-col :span="4">Some Link</a-col>
-      <a-col :span="2" :offset="10" :style="{ textAlign: 'center' }">Ping: {{ ping }}</a-col>
+      <a-col :span="2" :offset="10" :style="{ textAlign: 'center' }">Ping: {{ ping }} ms</a-col>
     </a-row>
   </div>
 </template>

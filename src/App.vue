@@ -24,19 +24,28 @@
 <style scoped>
   .origin-layout {
     background-color: white;
+    width: 100vw;
     height: 100vh;
   }
   .header-layout {
     background-color: #7dbcea;
+    width: 100vw;
+    height: 10%;
+    overflow: hidden;
     color: white;
   }
   .main-layout {
     margin: 24px 0 24px 0;
     padding: 0 10% 0 10%;
+    overflow-x: hidden;
+    overflow-y: scroll;
     background-color: white;
   }
   .footer-layout {
     position: static;
+    width: 100vw;
+    height: 10%;
+    overflow: hidden;
     bottom: 0;
   }
 </style>

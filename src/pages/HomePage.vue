@@ -9,6 +9,9 @@
 
 <template>
   <TableComponent></TableComponent>
+  <div style="height: 1000px; position: relative; width: 1100px">
+    <h1 style="position: absolute; right: 0">Hello</h1>
+  </div>
 </template>
 
 <style scoped>
