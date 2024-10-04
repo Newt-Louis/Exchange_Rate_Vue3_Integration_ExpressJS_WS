@@ -17,24 +17,24 @@ export const useWebSocketStore = defineStore("websocket", () => {
       const data = JSON.parse(event.data);
       console.log(data);
       if (data?.type === "ping") {
-        let clientTimestamp = Date.now();
-        let serverTimestamp = data.timestamp;
+        const clientTimestamp = Date.now();
+        const serverTimestamp = data.timestamp;
         delay.value = clientTimestamp - serverTimestamp;
       } else {
         data.forEach(element => {
           switch (element.bank) {
             case "ACB":
-              acbStore.getACBData(element.data);
+              acbStore.insertACBData(element.data);
               break;
             case "VCB":
-              vcbStore.getVCBData(element.data);
+              vcbStore.insertVCBData(element.data);
               break;
           }
         });
       }
     };
     ws.onerror = error => {
-      console.log("Có lỗi kết nối " + err);
+      console.log("Có lỗi kết nối " + error);
     };
   };
 
