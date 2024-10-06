@@ -3,7 +3,9 @@ import { computed, ref } from "vue";
 
 export const useVCBStore = defineStore("VCB", () => {
   const vcbData = ref([]);
-  const transformData = computed(() => {});
+  const getVCBData = computed(() => {
+    return vcbData.value;
+  });
   const insertVCBData = arr => (vcbData.value = arr);
-  return { vcbData, transformData, insertVCBData };
+  return { vcbData, getVCBData, insertVCBData };
 });

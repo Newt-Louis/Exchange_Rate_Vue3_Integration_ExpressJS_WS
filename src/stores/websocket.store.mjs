@@ -24,10 +24,10 @@ export const useWebSocketStore = defineStore("websocket", () => {
         data.forEach(element => {
           switch (element.bank) {
             case "ACB":
-              acbStore.insertACBData(element.data);
+              acbStore.insertACBData(element);
               break;
             case "VCB":
-              vcbStore.insertVCBData(element.data);
+              vcbStore.insertVCBData(element);
               break;
           }
         });
