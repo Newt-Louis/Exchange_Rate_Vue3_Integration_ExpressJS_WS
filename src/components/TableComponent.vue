@@ -76,6 +76,12 @@
       },
     },
     data: Array,
+    filter: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
   });
   const svgPath = import.meta.env.VITE_CURRENCY_SVG;
   const pngPath = import.meta.env.VITE_BANK_LOGO;
@@ -88,6 +94,7 @@
   currencyList.forEach(element => {
     element.imglink = svgPath + element.imglink;
   });
+
   const bankList = ref([
     { name: "ACB", imglink: `${pngPath}/acb_logo.png` },
     { name: "VCB", imglink: `${pngPath}/vcb_logo.png` },
