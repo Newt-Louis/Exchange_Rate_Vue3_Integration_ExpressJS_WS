@@ -3,7 +3,7 @@
   { "name": "USD (5,10,20)", "imglink": "/im_flag_usa.svg" },
   { "name": "USD (1,2)", "imglink": "/im_flag_usa.svg" },
   { "name": "EUR", "imglink": "/im_flag_eur.svg" },
-  { "name": "GPB", "imglink": "/im_flag_gbp.svg" },
+  { "name": "GBP", "imglink": "/im_flag_gbp.svg" },
   { "name": "JPY", "imglink": "/im_flag_jpy.svg" },
   { "name": "AUD", "imglink": "/im_flag_aud.svg" },
   { "name": "SGD", "imglink": "/im_flag_sgd.svg" },

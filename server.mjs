@@ -2,11 +2,7 @@ import "dotenv/config";
 import express from "express";
 import fs, { readFile, writeFile } from "node:fs/promises";
 import apiIndexRoute from "./apiresource/index.api.mjs";
-import { createServer } from "node:http";
 import { WebSocketServer } from "ws";
-import { scrapVCB } from "./puppeteerCrawl/scrapperVCB.ppt.mjs";
-import { scrapACB } from "./puppeteerCrawl/scrapperACB.ppt.mjs";
-import { error } from "node:console";
 // Constants
 /* const isProduction = process.env.NODE_ENV === "production";
 const port = process.env.PORT || 5173;
@@ -126,28 +122,28 @@ wss.on("connection", async (ws, request) => {
   try {
     crawlData = await readCrawlFile();
   } catch (error) {
-    console.log("có lỗi đọc file khi websocket server thành lập");
+    console.log("có lỗi đọc file khi websocket server thành lập" + error);
   }
   ws.send(crawlData);
   ws.on("message", function incomming(message) {
     console.log(message);
   });
-  // const serverPing = setInterval(() => {
-  //   ws.ping("", false, error => {
-  //     const serverTimestamp = JSON.stringify({ type: "ping", timestamp: Date.now() });
-  //     ws.send(serverTimestamp);
-  //     if (error) {
-  //       console.log("Lỗi khi gửi ping " + error);
-  //       ws.close(3, "kết nối bị ngắt");
-  //     }
-  //   });
-  // }, 2000);
-  // ws.on("pong", () => {
-  //   console.log("nhận pong từ client");
-  // });
-  // ws.on("close", () => {
-  //   clearInterval(serverPing);
-  // });
+  const serverPing = setInterval(() => {
+    ws.ping("", false, error => {
+      const serverTimestamp = JSON.stringify({ type: "ping", timestamp: Date.now() });
+      ws.send(serverTimestamp);
+      if (error) {
+        console.log("Lỗi khi gửi ping " + error);
+        ws.close(3, "kết nối bị ngắt");
+      }
+    });
+  }, 2000);
+  ws.on("pong", () => {
+    // console.log("nhận pong từ client");
+  });
+  ws.on("close", () => {
+    clearInterval(serverPing);
+  });
 });
 // Emitted when the underlying server has been bound. It's triggered only once when server established
 wss.on("listening", () => {});

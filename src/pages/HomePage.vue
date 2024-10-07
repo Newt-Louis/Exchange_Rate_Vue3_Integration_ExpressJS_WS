@@ -7,26 +7,21 @@
   const acbStore = useACBStore();
   const vcbStore = useVCBStore();
   const generalArr = ref([]);
-  const propBankData = (...value) => {
-    const data = [];
-    data.push(value);
-    return data;
-  };
-  console.log(generalArr.value);
 
   watch(
     () => [acbStore.getACBData, vcbStore.getVCBData],
     ([newACBState, newVCBState], [oldACBState, oldVCBState]) => {
-      generalArr.value = [newACBState, newVCBState];
-      console.log(generalArr.value);
+      if (generalArr.value.length > 0) generalArr.value.splice(0, generalArr.value.length);
+
+      generalArr.value.push(newACBState, newVCBState);
     },
     { deep: true }
   );
 </script>
 
 <template>
-  <TableComponent :data="generalArr"></TableComponent>
-  <div>{{ generalArr }}</div>
+  <TableComponent :data="generalArr" :exchange-type="`cash`"></TableComponent>
+  <TableComponent :data="generalArr" :exchange-type="`transfer`"></TableComponent>
 </template>
 
 <style scoped>
