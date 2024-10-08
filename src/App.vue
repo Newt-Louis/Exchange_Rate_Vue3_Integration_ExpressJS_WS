@@ -25,7 +25,6 @@
   .origin-layout {
     background-color: white;
     width: 100vw;
-    height: 100vh;
   }
   .header-layout {
     background-color: #7dbcea;
@@ -35,6 +34,9 @@
     color: white;
   }
   .main-layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin: 24px 0 24px 0;
     padding: 0 10% 0 10%;
     overflow-x: hidden;

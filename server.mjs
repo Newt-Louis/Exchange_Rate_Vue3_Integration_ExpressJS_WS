@@ -2,6 +2,8 @@ import "dotenv/config";
 import express from "express";
 import fs, { readFile, writeFile } from "node:fs/promises";
 import apiIndexRoute from "./apiresource/index.api.mjs";
+import { scrapACB } from "./puppeteerCrawl/scrapperACB.ppt.mjs";
+import { scrapVCB } from "./puppeteerCrawl/scrapperVCB.ppt.mjs";
 import { WebSocketServer } from "ws";
 // Constants
 /* const isProduction = process.env.NODE_ENV === "production";
@@ -88,9 +90,14 @@ app.use("*", async (req, res) => {
 });
 async function writeCrawlFile(data) {
   const path = "./data/crawldata.json";
-  const jsondata = JSON.stringify(data);
-  const currentDataFile = readFile(path, "utf-8");
-  const dataToAdd = (await currentDataFile).concat(jsondata);
+  let dataToAdd = [];
+  let currentDataFile = JSON.parse(await readFile(path, "utf-8"));
+  if (currentDataFile.length > 1) {
+    currentDataFile = [];
+  }
+  currentDataFile.push(data);
+  dataToAdd = JSON.stringify(currentDataFile);
+  // const dataToAdd = (await currentDataFile).concat(jsondata);
   try {
     await writeFile(path, dataToAdd);
   } catch (error) {
@@ -111,13 +118,10 @@ async function readCrawlFile() {
 // Start Websocket Server
 wss.on("connection", async (ws, request) => {
   // Both writeFile and puppeteer need to be called as async/await, if don't they will only catch null data
-  // const dataACB = await scrapACB();
-  // const dataVCB = await scrapVCB();
-  // await writeCrawlFile(dataACB);
-  // await writeCrawlFile(dataVCB);
-
-  // ws.send(JSON.stringify(["ACB", dataACB]));
-  // ws.send(JSON.stringify(["VCB", dataVCB]));
+  const dataACB = await scrapACB();
+  const dataVCB = await scrapVCB();
+  await writeCrawlFile(dataACB);
+  await writeCrawlFile(dataVCB);
   let crawlData;
   try {
     crawlData = await readCrawlFile();
@@ -125,9 +129,9 @@ wss.on("connection", async (ws, request) => {
     console.log("có lỗi đọc file khi websocket server thành lập" + error);
   }
   ws.send(crawlData);
-  ws.on("message", function incomming(message) {
-    console.log(message);
-  });
+  // ws.on("message", function incomming(message) {
+  //   console.log(message);
+  // });
   const serverPing = setInterval(() => {
     ws.ping("", false, error => {
       const serverTimestamp = JSON.stringify({ type: "ping", timestamp: Date.now() });

@@ -5,18 +5,18 @@
       <thead class="table-thead">
         <tr class="table-tr">
           <th class="table-th"><span>Bank</span></th>
-          <th v-for="(title, index) in currencyList" :key="index" class="table-th">
+          <th v-for="(title, index) in frTH" :key="index" class="table-th">
             <img :src="title.imglink" :alt="title.name" />
             <span>{{ title.name }}</span>
           </th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(bank, index) in bankList" :key="index">
+        <tr v-for="(bank, index) in frTD" :key="index">
           <td>
             <img :src="bank.imglink" alt="" width="50px" height="30px" style="margin-right: 8px" />{{ bank.name }}
           </td>
-          <!-- eslint-disable-next-line vue/no-use-v-if-with-v-for -->
           <td v-for="(value, index) in bank.data" :key="index">
             <div class="buy-sell">Giá bán / Giá mua</div>
             <div class="buy-sell-value">
@@ -25,6 +25,7 @@
               <span>{{ value?.sellCash }}</span>
             </div>
           </td>
+          <td></td>
         </tr>
       </tbody>
     </table>
@@ -35,14 +36,15 @@
       <thead class="table-thead">
         <tr class="table-tr">
           <th class="table-th"><span>Bank</span></th>
-          <th v-for="(title, index) in currencyList" :key="index" class="table-th">
+          <th v-for="(title, index) in frTH" :key="index" class="table-th">
             <img :src="title.imglink" :alt="title.name" />
             <span>{{ title.name }}</span>
           </th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(bank, index) in bankList" :key="index">
+        <tr v-for="(bank, index) in frTD" :key="index">
           <td>
             <img :src="bank.imglink" alt="" width="50px" height="30px" style="margin-right: 8px" />{{ bank.name }}
           </td>
@@ -54,6 +56,7 @@
               <span>{{ value?.sellTransfer }}</span>
             </div>
           </td>
+          <td></td>
         </tr>
       </tbody>
     </table>
@@ -61,7 +64,7 @@
 </template>
 
 <script setup>
-  import { computed, nextTick, onMounted, ref, watch } from "vue";
+  import { computed, nextTick, onBeforeMount, onMounted, ref, watch, watchEffect } from "vue";
   /* currencyData is now a new variable with memory created
   from the server including all the data of the json file,
   vite will automatically convert the json data into javascript data.  */
@@ -76,7 +79,7 @@
       },
     },
     data: Array,
-    filter: {
+    filterExchange: {
       type: Array,
       default: () => {
         return [];
@@ -85,7 +88,7 @@
   });
   const svgPath = import.meta.env.VITE_CURRENCY_SVG;
   const pngPath = import.meta.env.VITE_BANK_LOGO;
-  const isExchangeType = ref(false);
+  const isExchangeType = ref(true);
   /* In ssr technique, when we create a new memory area, that memory area belongs to the server,
   not the client, so when we reload the page, the memory area will not be reset because the server is still running,
   it is necessary to create a deep copy to ensure both. Arrays and objects are a completely new memory area
@@ -130,20 +133,94 @@
         }
       }
       if (!found) {
-        data.push({ title: "none", buyCash: "none", buyTransfer: "none", sellCash: "none", sellTransfer: "none" });
+        data.push({
+          title: currency.name,
+          buyCash: "none",
+          buyTransfer: "none",
+          sellCash: "none",
+          sellTransfer: "none",
+        });
       }
     }
     return data;
   };
+  const frTH = ref([]);
+  const frTD = ref([
+    { name: "ACB", data: [], imglink: `${pngPath}/acb_logo.png` },
+    { name: "VCB", data: [], imglink: `${pngPath}/vcb_logo.png` },
+  ]);
+  onBeforeMount(() => {
+    contributeData();
+  });
+  watchEffect(() => {
+    const arrValidate = frTH.value.reduce((accumulator, currentValue) => {
+      const newObject = { name: currentValue.name, check: false };
+      accumulator.push(newObject);
+      return accumulator;
+    }, []);
+
+    for (let i = 0; i < bankList.value.length; i++) {
+      frTD.value[i].data = [];
+
+      if (bankList.value[i]?.data) {
+        for (let j = 0; j < bankList.value[i].data.length; j++) {
+          let found = false;
+          for (let k = 0; k < arrValidate.length; k++) {
+            const exchangeName = bankList.value[i].data[j].title;
+            if (arrValidate[k].name.includes(exchangeName)) {
+              found = true;
+              arrValidate[k].check = true;
+              frTD.value[i].data.push(bankList.value[i].data[j]);
+              break;
+            }
+          }
+          if (!found) {
+          }
+          const stop = arrValidate.every(element => element.check);
+          if (stop) break;
+        }
+      }
+      arrValidate.forEach(element => (element.check = false));
+    }
+  });
+  watch(
+    () => props.filterExchange,
+    newVal => {
+      const arrValidate = newVal.reduce((accumulator, currentValue) => {
+        const newObject = { name: currentValue, check: false };
+        accumulator.push(newObject);
+        return accumulator;
+      }, []);
+      frTH.value = [];
+
+      if (newVal.length <= 0) {
+        frTH.value.push(...currencyList);
+      } else {
+        for (let i = 0; i < currencyList.length; i++) {
+          for (let j = 0; j < arrValidate.length; j++) {
+            if (currencyList[i].name.includes(arrValidate[j].name)) {
+              arrValidate[j].check = true;
+              frTH.value.push(currencyList[i]);
+              break;
+            }
+          }
+          const stop = arrValidate.every(element => element.check);
+          if (stop) break;
+        }
+      }
+    },
+    { immediate: true }
+  );
   watch(
     () => props.exchangeType,
     newVal => {
-      if (newVal === "transfer") {
-        isExchangeType.value = false;
-      } else {
+      if (newVal === "cash") {
         isExchangeType.value = true;
+      } else {
+        isExchangeType.value = false;
       }
-    }
+    },
+    { immediate: true }
   );
   watch(
     () => props.data,
@@ -156,15 +233,17 @@
 
 <style>
   .container-table {
-    overflow: scroll;
+    overflow-x: scroll;
     margin-bottom: 48px;
   }
   .table-layout {
     width: 5200px;
+    table-layout: fixed;
   }
   .table-th {
     padding: 12px;
     width: 180px;
+    max-width: 180px;
     font-size: 16px;
   }
   .table-th > img {

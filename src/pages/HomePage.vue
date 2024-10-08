@@ -26,17 +26,22 @@
 </script>
 
 <template>
-  <TableComponent :data="generalArr" :exchange-type="`cash`" :filter="valueSelect"></TableComponent>
-  <TableComponent :data="generalArr" :exchange-type="`transfer`" :filter="valueSelect"></TableComponent>
-
-  <a-select
-    v-model:value="valueSelect"
-    mode="multiple"
-    style="width: 100%"
-    placeholder="Please select"
-    :options="selectData"
-    id="rc_select"
-  ></a-select>
+  <TableComponent :data="generalArr" :exchange-type="'cash'" :filter-exchange="valueSelect"></TableComponent>
+  <TableComponent :data="generalArr" :exchange-type="`transfer`" :filter-exchange="valueSelect"></TableComponent>
+  <a-row>
+    <a-col :span="12">
+      <a-typography-title :level="4">Filter Currency</a-typography-title>
+      <a-select
+        v-model:value="valueSelect"
+        mode="multiple"
+        style="width: 100%"
+        placeholder="Please select"
+        :options="selectData"
+        id="rc_select"
+      ></a-select>
+    </a-col>
+    <a-col :span="12"></a-col>
+  </a-row>
 </template>
 
 <style scoped>

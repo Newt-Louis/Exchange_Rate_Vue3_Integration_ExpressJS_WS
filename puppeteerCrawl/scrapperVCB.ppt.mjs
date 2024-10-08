@@ -10,8 +10,8 @@ export async function scrapVCB() {
   await page.setViewport({ width: 1400, height: 1024 });
   await page.goto(link, { waitUntil: "load" });
   await page.waitForSelector("div.load-more-button");
-  const buttonLoadMore = await page.$("div.load-more-button");
-  await buttonLoadMore.click();
+  // const buttonLoadMore = await page.$("div.load-more-button");
+  // await buttonLoadMore.click();
   const getParentElement = await page.$("tbody");
   const getAllDescendants = await getParentElement.$$("tr");
   for (let index = 0; index < getAllDescendants.length; index++) {
