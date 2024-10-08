@@ -10,5 +10,4 @@ package-lock.json
 
 # define rules for personal, other dev when clone should have rules themself
 jsconfig.json
-eslint.config.mjs
 eslint-plugin-vue.d.ts
