@@ -49,8 +49,8 @@ _Then you clone this project by click on Code button then copy link to git or ju
 
 ## Requirement
 
-- ==NodeJS ~ v20==
-- ==Copy ".env.example" to ".env" so that the server expressjs can use enviroment variables.==
+- <mark>NodeJS ~ v20</mark>
+- <mark>Copy ".env.example" to ".env" so that the server expressjs can use enviroment variables.</mark>
 
 ## Install
 
