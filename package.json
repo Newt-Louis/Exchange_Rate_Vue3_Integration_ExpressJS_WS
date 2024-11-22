@@ -16,6 +16,7 @@
     "axios": "^1.7.7",
     "compression": "^1.7.4",
     "express": "^4.19.2",
+    "mongodb": "^6.10.0",
     "pinia": "^2.2.2",
     "puppeteer-core": "^23.3.1",
     "sirv": "^2.0.4",
