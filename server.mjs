@@ -5,7 +5,8 @@ import apiIndexRoute from "./apiresource/index.api.mjs";
 import { scrapACB } from "./puppeteerCrawl/scrapperACB.ppt.mjs";
 import { scrapVCB } from "./puppeteerCrawl/scrapperVCB.ppt.mjs";
 import { WebSocketServer } from "ws";
-import { MongoClient, ServerApiVersion } from "mongodb";
+import ExchangeData from "./data/ExchangeData.mjs";
+
 // Constants
 /* const isProduction = process.env.NODE_ENV === "production";
 const port = process.env.PORT || 5173;
@@ -55,7 +56,11 @@ if (!isProduction) {
 // API
 app.use("/api", apiIndexRoute);
 
-// // Serve HTML
+/**
+ *
+ * Serve HTML
+ *
+ */
 app.use("*", async (req, res) => {
   try {
     // req.originalUrl contain only after domain name like localhost:300/about => req.originalUrl = "/about"
@@ -89,43 +94,19 @@ app.use("*", async (req, res) => {
     res.status(500).end(e.stack);
   }
 });
-async function writeCrawlFile(data) {
-  const path = "./data/crawldata.json";
-  let dataToAdd = [];
-  let currentDataFile = JSON.parse(await readFile(path, "utf-8"));
-  if (currentDataFile.length > 1) {
-    currentDataFile = [];
-  }
-  currentDataFile.push(data);
-  dataToAdd = JSON.stringify(currentDataFile);
-  // const dataToAdd = (await currentDataFile).concat(jsondata);
-  try {
-    await writeFile(path, dataToAdd);
-  } catch (error) {
-    console.log("có lỗi khi ghi file" + error);
-  }
-}
-async function readCrawlFile() {
-  const path = "./data/crawldata.json";
-  let jsondata = "";
-  try {
-    jsondata = await readFile(path, { encoding: "utf-8" });
-  } catch (error) {
-    jsondata = "Lỗi khi lấy dữ liệu !";
-    console.log("có lỗi khi đọc file" + error);
-  }
-  return jsondata;
-}
-// Start Websocket Server
+
+/**
+ *
+ * Start Websocket Server
+ */
 wss.on("connection", async (ws, request) => {
   // Both writeFile and puppeteer need to be called as async/await, if don't they will only catch null data
   const dataACB = await scrapACB();
   const dataVCB = await scrapVCB();
-  await writeCrawlFile(dataACB);
-  await writeCrawlFile(dataVCB);
+
   let crawlData;
   try {
-    crawlData = await readCrawlFile();
+    crawlData = await ExchangeData.all();
   } catch (error) {
     console.log("có lỗi đọc file khi websocket server thành lập" + error);
   }
@@ -160,7 +141,10 @@ wss.on("error", error => {
     console.log(`Server had undefined Error ${err}`);
   });
 });
-// Start http server
+
+/**
+ * Start http server
+ */
 app.listen(port, async () => {
   console.log(`Server started at http://localhost:${port}`);
 });

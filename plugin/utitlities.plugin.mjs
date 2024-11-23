@@ -1,3 +1,5 @@
+import fs, { readFile, writeFile } from "node:fs/promises";
+
 export const deepCopy = obj => {
   if (typeof obj !== "object" || obj === null) {
     return obj;
@@ -12,11 +14,29 @@ export const deepCopy = obj => {
   return copy;
 };
 
+/**
+ *
+ * @param {Date} dateObj
+ */
+export const formattedDate = dateObj => {
+  const year = dateObj.getFullYear();
+  const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+  const day = String(dateObj.getDay()).padStart(2, "0");
+  const hour = String(dateObj.getDay()).padStart(2, "0");
+  const minute = String(dateObj.getMinutes()).padStart(2, "0");
+
+  return `${year}-${month}-${day} ${hour}:${minute}`;
+};
+
 export const writeCrawlFile = async data => {
   const path = "./data/crawldata.json";
-  const jsondata = JSON.stringify(data);
-  const currentDataFile = readFile(path, "utf-8");
-  const dataToAdd = (await currentDataFile).concat(jsondata);
+  let dataToAdd = [];
+  let currentDataFile = JSON.parse(await readFile(path, "utf-8"));
+  if (currentDataFile.length > 1) {
+    currentDataFile = [];
+  }
+  currentDataFile.push(data);
+  dataToAdd = JSON.stringify(currentDataFile);
   try {
     await writeFile(path, dataToAdd);
   } catch (error) {

@@ -1,1 +1,123 @@
-[{"bank":"ACB","data":[{"title":"USD (50,100)","buyCash":"24,640","buyTransfer":"24,670","sellCash":"25,010","sellTransfer":"25,010"},{"title":"USD (5,10,20)","buyCash":"24,250","buyTransfer":"","sellCash":"","sellTransfer":""},{"title":"USD (1,2)","buyCash":"23,500","buyTransfer":"","sellCash":"","sellTransfer":""},{"title":"AUD","buyCash":"16,358","buyTransfer":"16,465","sellCash":"17,036","sellTransfer":"17,036"},{"title":"CAD","buyCash":"17,823","buyTransfer":"17,930","sellCash":"18,552","sellTransfer":"18,552"},{"title":"EUR","buyCash":"26,776","buyTransfer":"26,883","sellCash":"27,816","sellTransfer":"27,816"},{"title":"JPY","buyCash":"164.25","buyTransfer":"165.08","sellCash":"171.49","sellTransfer":"171.49"},{"title":"SGD","buyCash":"18,627","buyTransfer":"18,749","sellCash":"19,399","sellTransfer":"19,399"},{"title":"CHF","buyCash":"","buyTransfer":"28,540","sellCash":"","sellTransfer":"29,530"},{"title":"GBP","buyCash":"","buyTransfer":"32,013","sellCash":"","sellTransfer":"33,123"},{"title":"KRW","buyCash":"","buyTransfer":"18.59","sellCash":"","sellTransfer":"19.35"},{"title":"NZD","buyCash":"","buyTransfer":"14,962","sellCash":"","sellTransfer":"15,481"},{"title":"AED","buyCash":"","buyTransfer":"","sellCash":"","sellTransfer":"6,896"},{"title":"DKK","buyCash":"","buyTransfer":"","sellCash":"","sellTransfer":"3,745"},{"title":"IDR","buyCash":"","buyTransfer":"","sellCash":"","sellTransfer":"1.62"},{"title":"INR","buyCash":"","buyTransfer":"","sellCash":"","sellTransfer":"301.63"},{"title":"HKD","buyCash":"","buyTransfer":"","sellCash":"","sellTransfer":"3,274"},{"title":"KHR","buyCash":"","buyTransfer":"","sellCash":"","sellTransfer":"6.32"},{"title":"MYR","buyCash":"","buyTransfer":"","sellCash":"","sellTransfer":"5,989"},{"title":"NOK","buyCash":"","buyTransfer":"","sellCash":"","sellTransfer":"2,392"},{"title":"PHP","buyCash":"","buyTransfer":"","sellCash":"","sellTransfer":"447"},{"title":"SEK","buyCash":"","buyTransfer":"","sellCash":"","sellTransfer":"2,458"},{"title":"TRY","buyCash":"","buyTransfer":"","sellCash":"","sellTransfer":"740"},{"title":"TWD","buyCash":"","buyTransfer":"","sellCash":"","sellTransfer":"787.83"},{"title":"ZAR","buyCash":"","buyTransfer":"","sellCash":"","sellTransfer":"1,459"}]},{"bank":"VCB","data":[{"title":"USD","buyCash":"24,635.00","buyTransfer":"24,665.00","sellCash":"25,025.00","sellTransfer":"25,025.00"},{"title":"EUR","buyCash":"26,580.49","buyTransfer":"26,848.98","sellCash":"28,038.92","sellTransfer":"28,038.92"},{"title":"GBP","buyCash":"31,693.24","buyTransfer":"32,013.38","sellCash":"33,041.56","sellTransfer":"33,041.56"},{"title":"JPY","buyCash":"162.37","buyTransfer":"164.01","sellCash":"171.82","sellTransfer":"171.82"},{"title":"AUD","buyCash":"16,323.52","buyTransfer":"16,488.41","sellCash":"17,017.97","sellTransfer":"17,017.97"},{"title":"SGD","buyCash":"18,590.06","buyTransfer":"18,777.83","sellCash":"19,380.93","sellTransfer":"19,380.93"},{"title":"THB","buyCash":"656.13","buyTransfer":"729.03","sellCash":"756.97","sellTransfer":"756.97"},{"title":"CAD","buyCash":"17,777.93","buyTransfer":"17,957.51","sellCash":"18,534.25","sellTransfer":"18,534.25"},{"title":"CHF","buyCash":"28,376.36","buyTransfer":"28,662.99","sellCash":"29,583.56","sellTransfer":"29,583.56"},{"title":"HKD","buyCash":"3,116.89","buyTransfer":"3,148.37","sellCash":"3,249.49","sellTransfer":"3,249.49"},{"title":"CNY","buyCash":"3,432.16","buyTransfer":"3,466.83","sellCash":"3,578.17","sellTransfer":"3,578.17"},{"title":"DKK","buyCash":"-","buyTransfer":"3,591.84","sellCash":"3,729.51","sellTransfer":"3,729.51"},{"title":"INR","buyCash":"-","buyTransfer":"295.02","sellCash":"306.83","sellTransfer":"306.83"},{"title":"KRW","buyCash":"15.94","buyTransfer":"17.71","sellCash":"19.22","sellTransfer":"19.22"},{"title":"KWD","buyCash":"-","buyTransfer":"81,018.47","sellCash":"84,260.43","sellTransfer":"84,260.43"},{"title":"MYR","buyCash":"-","buyTransfer":"5,741.46","sellCash":"5,866.89","sellTransfer":"5,866.89"},{"title":"NOK","buyCash":"-","buyTransfer":"2,284.47","sellCash":"2,381.54","sellTransfer":"2,381.54"},{"title":"RUB","buyCash":"-","buyTransfer":"245.78","sellCash":"272.09","sellTransfer":"272.09"},{"title":"SAR","buyCash":"-","buyTransfer":"6,596.23","sellCash":"6,860.18","sellTransfer":"6,860.18"},{"title":"SEK","buyCash":"-","buyTransfer":"2,351.61","sellCash":"2,451.54","sellTransfer":"2,451.54"}]}]
+[
+  {
+    "bank": "ACB",
+    "data": [
+      {
+        "title": "USD (50,100)",
+        "buyCash": "24,640",
+        "buyTransfer": "24,670",
+        "sellCash": "25,010",
+        "sellTransfer": "25,010"
+      },
+      { "title": "USD (5,10,20)", "buyCash": "24,250", "buyTransfer": "", "sellCash": "", "sellTransfer": "" },
+      { "title": "USD (1,2)", "buyCash": "23,500", "buyTransfer": "", "sellCash": "", "sellTransfer": "" },
+      { "title": "AUD", "buyCash": "16,358", "buyTransfer": "16,465", "sellCash": "17,036", "sellTransfer": "17,036" },
+      { "title": "CAD", "buyCash": "17,823", "buyTransfer": "17,930", "sellCash": "18,552", "sellTransfer": "18,552" },
+      { "title": "EUR", "buyCash": "26,776", "buyTransfer": "26,883", "sellCash": "27,816", "sellTransfer": "27,816" },
+      { "title": "JPY", "buyCash": "164.25", "buyTransfer": "165.08", "sellCash": "171.49", "sellTransfer": "171.49" },
+      { "title": "SGD", "buyCash": "18,627", "buyTransfer": "18,749", "sellCash": "19,399", "sellTransfer": "19,399" },
+      { "title": "CHF", "buyCash": "", "buyTransfer": "28,540", "sellCash": "", "sellTransfer": "29,530" },
+      { "title": "GBP", "buyCash": "", "buyTransfer": "32,013", "sellCash": "", "sellTransfer": "33,123" },
+      { "title": "KRW", "buyCash": "", "buyTransfer": "18.59", "sellCash": "", "sellTransfer": "19.35" },
+      { "title": "NZD", "buyCash": "", "buyTransfer": "14,962", "sellCash": "", "sellTransfer": "15,481" },
+      { "title": "AED", "buyCash": "", "buyTransfer": "", "sellCash": "", "sellTransfer": "6,896" },
+      { "title": "DKK", "buyCash": "", "buyTransfer": "", "sellCash": "", "sellTransfer": "3,745" },
+      { "title": "IDR", "buyCash": "", "buyTransfer": "", "sellCash": "", "sellTransfer": "1.62" },
+      { "title": "INR", "buyCash": "", "buyTransfer": "", "sellCash": "", "sellTransfer": "301.63" },
+      { "title": "HKD", "buyCash": "", "buyTransfer": "", "sellCash": "", "sellTransfer": "3,274" },
+      { "title": "KHR", "buyCash": "", "buyTransfer": "", "sellCash": "", "sellTransfer": "6.32" },
+      { "title": "MYR", "buyCash": "", "buyTransfer": "", "sellCash": "", "sellTransfer": "5,989" },
+      { "title": "NOK", "buyCash": "", "buyTransfer": "", "sellCash": "", "sellTransfer": "2,392" },
+      { "title": "PHP", "buyCash": "", "buyTransfer": "", "sellCash": "", "sellTransfer": "447" },
+      { "title": "SEK", "buyCash": "", "buyTransfer": "", "sellCash": "", "sellTransfer": "2,458" },
+      { "title": "TRY", "buyCash": "", "buyTransfer": "", "sellCash": "", "sellTransfer": "740" },
+      { "title": "TWD", "buyCash": "", "buyTransfer": "", "sellCash": "", "sellTransfer": "787.83" },
+      { "title": "ZAR", "buyCash": "", "buyTransfer": "", "sellCash": "", "sellTransfer": "1,459" }
+    ]
+  },
+  {
+    "bank": "VCB",
+    "data": [
+      {
+        "title": "USD",
+        "buyCash": "24,635.00",
+        "buyTransfer": "24,665.00",
+        "sellCash": "25,025.00",
+        "sellTransfer": "25,025.00"
+      },
+      {
+        "title": "EUR",
+        "buyCash": "26,580.49",
+        "buyTransfer": "26,848.98",
+        "sellCash": "28,038.92",
+        "sellTransfer": "28,038.92"
+      },
+      {
+        "title": "GBP",
+        "buyCash": "31,693.24",
+        "buyTransfer": "32,013.38",
+        "sellCash": "33,041.56",
+        "sellTransfer": "33,041.56"
+      },
+      { "title": "JPY", "buyCash": "162.37", "buyTransfer": "164.01", "sellCash": "171.82", "sellTransfer": "171.82" },
+      {
+        "title": "AUD",
+        "buyCash": "16,323.52",
+        "buyTransfer": "16,488.41",
+        "sellCash": "17,017.97",
+        "sellTransfer": "17,017.97"
+      },
+      {
+        "title": "SGD",
+        "buyCash": "18,590.06",
+        "buyTransfer": "18,777.83",
+        "sellCash": "19,380.93",
+        "sellTransfer": "19,380.93"
+      },
+      { "title": "THB", "buyCash": "656.13", "buyTransfer": "729.03", "sellCash": "756.97", "sellTransfer": "756.97" },
+      {
+        "title": "CAD",
+        "buyCash": "17,777.93",
+        "buyTransfer": "17,957.51",
+        "sellCash": "18,534.25",
+        "sellTransfer": "18,534.25"
+      },
+      {
+        "title": "CHF",
+        "buyCash": "28,376.36",
+        "buyTransfer": "28,662.99",
+        "sellCash": "29,583.56",
+        "sellTransfer": "29,583.56"
+      },
+      {
+        "title": "HKD",
+        "buyCash": "3,116.89",
+        "buyTransfer": "3,148.37",
+        "sellCash": "3,249.49",
+        "sellTransfer": "3,249.49"
+      },
+      {
+        "title": "CNY",
+        "buyCash": "3,432.16",
+        "buyTransfer": "3,466.83",
+        "sellCash": "3,578.17",
+        "sellTransfer": "3,578.17"
+      },
+      { "title": "DKK", "buyCash": "-", "buyTransfer": "3,591.84", "sellCash": "3,729.51", "sellTransfer": "3,729.51" },
+      { "title": "INR", "buyCash": "-", "buyTransfer": "295.02", "sellCash": "306.83", "sellTransfer": "306.83" },
+      { "title": "KRW", "buyCash": "15.94", "buyTransfer": "17.71", "sellCash": "19.22", "sellTransfer": "19.22" },
+      {
+        "title": "KWD",
+        "buyCash": "-",
+        "buyTransfer": "81,018.47",
+        "sellCash": "84,260.43",
+        "sellTransfer": "84,260.43"
+      },
+      { "title": "MYR", "buyCash": "-", "buyTransfer": "5,741.46", "sellCash": "5,866.89", "sellTransfer": "5,866.89" },
+      { "title": "NOK", "buyCash": "-", "buyTransfer": "2,284.47", "sellCash": "2,381.54", "sellTransfer": "2,381.54" },
+      { "title": "RUB", "buyCash": "-", "buyTransfer": "245.78", "sellCash": "272.09", "sellTransfer": "272.09" },
+      { "title": "SAR", "buyCash": "-", "buyTransfer": "6,596.23", "sellCash": "6,860.18", "sellTransfer": "6,860.18" },
+      { "title": "SEK", "buyCash": "-", "buyTransfer": "2,351.61", "sellCash": "2,451.54", "sellTransfer": "2,451.54" }
+    ]
+  }
+]
