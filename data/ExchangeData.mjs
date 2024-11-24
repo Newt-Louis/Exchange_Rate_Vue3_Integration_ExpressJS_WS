@@ -1,5 +1,5 @@
 import Connection from "./Connect.mjs";
-import formattedDate from "../plugin/utitlities.plugin.mjs";
+import { formattedDate } from "../plugin/utitlities.plugin.mjs";
 
 const database = "exchange-rate-app";
 const collection = "exchange-data";

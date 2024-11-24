@@ -69,7 +69,7 @@
   from the server including all the data of the json file,
   vite will automatically convert the json data into javascript data.  */
   import currencyData from "@/initialData.json";
-  import { deepCopy } from "../../plugin/utitlities.plugin.mjs";
+  import { deepCopy } from "../js/utilities.plugin.frontend.mjs";
 
   const props = defineProps({
     exchangeType: {

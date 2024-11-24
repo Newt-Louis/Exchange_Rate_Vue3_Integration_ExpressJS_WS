@@ -101,16 +101,16 @@ app.use("*", async (req, res) => {
  */
 wss.on("connection", async (ws, request) => {
   // Both writeFile and puppeteer need to be called as async/await, if don't they will only catch null data
-  const dataACB = await scrapACB();
-  const dataVCB = await scrapVCB();
+  // const dataACB = await scrapACB();
+  // const dataVCB = await scrapVCB();
 
-  let crawlData;
-  try {
-    crawlData = await ExchangeData.all();
-  } catch (error) {
-    console.log("có lỗi đọc file khi websocket server thành lập" + error);
-  }
-  ws.send(crawlData);
+  // let crawlData;
+  // try {
+  //   crawlData = await ExchangeData.all();
+  // } catch (error) {
+  //   console.log("có lỗi đọc file khi websocket server thành lập" + error);
+  // }
+  // ws.send(crawlData);
   // ws.on("message", function incomming(message) {
   //   console.log(message);
   // });
