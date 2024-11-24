@@ -11,9 +11,8 @@ class ExchangeData {
       const now = new Date();
       data["created_at"] = formattedDate(now);
       const db = await Connection.getCollection(this.database, this.collection);
-      const result = await db.insertMany(data);
+      const result = await db.insertOne(data);
       console.log("Insert MongoDB Success", result);
-
       return result;
     } catch (error) {
       console.log(error);

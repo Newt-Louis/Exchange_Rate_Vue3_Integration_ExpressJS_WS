@@ -1,11 +1,10 @@
 import "dotenv/config";
 import express from "express";
 import fs, { readFile, writeFile } from "node:fs/promises";
-import apiIndexRoute from "./apiresource/index.api.mjs";
+import apiRoute from "./apiresource/index.api.mjs";
 import { scrapACB } from "./puppeteerCrawl/scrapperACB.ppt.mjs";
 import { scrapVCB } from "./puppeteerCrawl/scrapperVCB.ppt.mjs";
 import { WebSocketServer } from "ws";
-import ExchangeData from "./data/ExchangeData.mjs";
 
 // Constants
 /* const isProduction = process.env.NODE_ENV === "production";
@@ -54,7 +53,7 @@ if (!isProduction) {
   app.use(base, sirv("./dist/client", { extensions: [] }));
 }
 // API
-app.use("/api", apiIndexRoute);
+app.use("/api", apiRoute);
 
 /**
  *
