@@ -93,7 +93,7 @@ export async function scrapACB() {
   return result;
 }
 
-export async function bankTime() {
+export async function acbBankTime() {
   /* required variables */
   /* create new instance puppeteer and open Chromium */
   const browser = await startBrowser();

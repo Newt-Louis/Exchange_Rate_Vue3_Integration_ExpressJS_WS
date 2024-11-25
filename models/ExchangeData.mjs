@@ -13,7 +13,7 @@ class ExchangeData {
         console.log(error);
       });
   }
-  storage = async (data, timeOnWebBank) => {
+  async storage(data, timeOnWebBank) {
     try {
       data["crawled_at"] = timeOnWebBank;
       // const client = new Connection();
@@ -25,8 +25,8 @@ class ExchangeData {
       console.log(error);
       throw error;
     }
-  };
-  all = async () => {
+  }
+  async all() {
     try {
       // const db = await Connection.getCollection(this.database, this.collection);
       const result = await this.db.find({}).toArray();
@@ -35,12 +35,16 @@ class ExchangeData {
       console.log(error);
       throw error;
     }
-  };
+  }
   async getCrawledAtNearestTime() {
     try {
       // const db = await Connection.getCollection(this.database, this.collection);
-      const arrayCrawledAt = await this.db.find({}, { crawled_at: 1, _id: 0 });
-    } catch (error) {}
+      const arrayCrawledAt = await this.db.find({}, { crawled_at: 1, _id: 0, bank: 0, data: 0 }).toArray();
+      console.log(arrayCrawledAt);
+      return arrayCrawledAt;
+    } catch (error) {
+      throw error;
+    }
   }
 }
 
