@@ -5,15 +5,20 @@ class ExchangeData {
   constructor(database, collection) {
     this.database = database;
     this.collection = collection;
-    this.db = Connection.getCollection(this.database, this.collection);
+    Connection.getCollection(this.database, this.collection)
+      .then(db => {
+        this.db = db;
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
-  storage = async data => {
+  storage = async (data, timeOnWebBank) => {
     try {
-      const now = new Date();
-      data["created_at"] = formattedDate(now);
+      data["crawled_at"] = timeOnWebBank;
       // const client = new Connection();
-      const db = await Connection.getCollection(this.database, this.collection);
-      const result = await db.insertMany(data);
+      // const db = await Connection.getCollection(this.database, this.collection);
+      const result = await this.db.insertMany(data);
       console.log("Insert MongoDB Success", result);
       return result;
     } catch (error) {
@@ -23,8 +28,8 @@ class ExchangeData {
   };
   all = async () => {
     try {
-      const db = await Connection.getCollection(this.database, this.collection);
-      const result = await db.find({}).toArray();
+      // const db = await Connection.getCollection(this.database, this.collection);
+      const result = await this.db.find({}).toArray();
       return result;
     } catch (error) {
       console.log(error);
@@ -33,7 +38,8 @@ class ExchangeData {
   };
   async getCrawledAtNearestTime() {
     try {
-      const db = await Connection.getCollection(this.database, this.collection);
+      // const db = await Connection.getCollection(this.database, this.collection);
+      const arrayCrawledAt = await this.db.find({}, { crawled_at: 1, _id: 0 });
     } catch (error) {}
   }
 }
