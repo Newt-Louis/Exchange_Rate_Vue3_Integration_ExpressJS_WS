@@ -19,9 +19,18 @@ class ExchangeDataController {
    */
   index = async (req, res, next) => {
     console.log("api get-data trong controller dòng 10");
-    // const result = await acbBankTime();
-    const dbCrawledAt = await this.acb.getCrawledAtNearestTime();
-    res.status(200).json(dbCrawledAt);
+    const currentUpdateBankTime = await acbBankTime();
+    const lastCrawled = await this.acb.getCrawledAtNearestTime();
+    if (lastCrawled <= currentUpdateBankTime) {
+      res.status(200).json({ message: "All data was up to date" });
+    } else {
+      let newObjectData = {};
+      const dataACB = await scrapACB();
+      newObjectData["data"] = dataACB.data;
+      newObjectData["crawled_at"] = currentUpdateBankTime;
+      const insertDatabase = await this.acb.storage(newObjectData);
+      res.status(200).json(insertDatabase);
+    }
   };
 
   fetch = async (req, res, next) => {

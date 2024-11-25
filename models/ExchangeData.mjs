@@ -39,9 +39,9 @@ class ExchangeData {
   async getCrawledAtNearestTime() {
     try {
       // const db = await Connection.getCollection(this.database, this.collection);
-      const arrayCrawledAt = await this.db.find({}, { crawled_at: 1, _id: 0, bank: 0, data: 0 }).toArray();
-      console.log(arrayCrawledAt);
-      return arrayCrawledAt;
+      const arrayCrawledAt = this.db.find({}).project({ crawled_at: 1, _id: 0 }).sort({ crawled_at: -1 }).limit(1);
+      const resultCrawledAt = await arrayCrawledAt.toArray();
+      return resultCrawledAt[0].crawled_at;
     } catch (error) {
       throw error;
     }
