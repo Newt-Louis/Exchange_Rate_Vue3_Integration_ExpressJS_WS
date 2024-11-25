@@ -16,6 +16,7 @@ class ConnectionInstace {
       },
     });
     ConnectionInstace.instance = this;
+    this.connect();
   }
 
   async connect() {
@@ -28,7 +29,6 @@ class ConnectionInstace {
   }
 
   async getCollection(dbName, collectionName) {
-    await this.connect();
     return this.client.db(dbName).collection(collectionName);
   }
 }

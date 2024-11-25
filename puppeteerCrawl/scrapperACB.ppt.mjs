@@ -92,3 +92,40 @@ export async function scrapACB() {
   const result = { bank: "ACB", data: arrayObject };
   return result;
 }
+
+export async function bankTime() {
+  /* required variables */
+  /* create new instance puppeteer and open Chromium */
+  const browser = await startBrowser();
+  const page = await browser.newPage();
+  const cookie = [
+    {
+      name: "AcceptCookie",
+      value: "true",
+      domain: "acb.com.vn",
+      path: "/",
+    },
+  ];
+  const linkACBExchangeRate = "https://acb.com.vn/ty-gia-hoi-doai";
+  let result;
+  /* 
+    use Puppeteer to set default cookie so that we can pass through notify cookie wich will
+    prevent click event on load more button.
+  */
+  await page.setViewport({ width: 1400, height: 1024 });
+  await page.setCookie(...cookie);
+  /* waitUntil page finish loaded all it resource include js */
+  await page.goto(linkACBExchangeRate, { waitUntil: "load" });
+  /* wait for seletor */
+  await page.waitForSelector("div.heading-filter>div.right>span.btn");
+  const originDateValue = await page.$("div.heading-filter>div.right>span.btn");
+  const stringDate = await originDateValue.evaluate(value => value.textContent);
+  const regexp = /[0-9]+/g;
+  const arrayDate = stringDate.match(regexp);
+  const day = parseInt(arrayDate[0], 10);
+  const month = parseInt(arrayDate[1], 10) - 1;
+  const year = parseInt(arrayDate[2], 10);
+  result = new Date(year, month, day);
+  await browser.close();
+  return result;
+}

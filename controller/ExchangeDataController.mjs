@@ -1,6 +1,6 @@
-import ACBCollection from "../data/ACBCollection.mjs";
-import VCBCollection from "../data/VCBCollection.mjs";
-import { scrapACB } from "../puppeteerCrawl/scrapperACB.ppt.mjs";
+import ACBCollection from "../models/ACBCollection.mjs";
+import VCBCollection from "../models/VCBCollection.mjs";
+import { scrapACB, bankTime } from "../puppeteerCrawl/scrapperACB.ppt.mjs";
 import { scrapVCB } from "../puppeteerCrawl/scrapperVCB.ppt.mjs";
 
 // const ExchangeDataController = {
@@ -39,10 +39,16 @@ class ExchangeDataController {
   }
   async index(req, res, next) {
     console.log("api get-data trong controller dòng 10");
+    const result = await bankTime();
+
+    res.status(200).json(result);
   }
 
   async fetch(req, res, next) {
     console.log("Lệnh thực thi ở Controller dòng 25");
+    const acb = new ACBCollection();
+    const result = acb.storage([{ bank: "ACB", time: "now", data: [{ name: "something", value: "something" }] }]);
+    return res.status(200).json(result);
   }
 }
 export default ExchangeDataController;
