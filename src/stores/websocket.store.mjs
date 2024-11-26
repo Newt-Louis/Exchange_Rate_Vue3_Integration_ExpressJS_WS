@@ -15,7 +15,6 @@ export const useWebSocketStore = defineStore("websocket", () => {
     };
     ws.onmessage = event => {
       const data = JSON.parse(event.data);
-      console.log(event);
       if (data?.type === "ping") {
         const clientTimestamp = Date.now();
         const serverTimestamp = data.timestamp;

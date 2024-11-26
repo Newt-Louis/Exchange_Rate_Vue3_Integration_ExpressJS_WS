@@ -12,8 +12,9 @@ class VCBController {
       if (time.checkTime) {
         vcbResult = await this.fetchDataByCrawl(time.crawled_at);
       } else {
-        const nearestTime = this.vcb.getCrawledAtNearestTime();
+        const nearestTime = await this.vcb.getCrawledAtNearestTime();
         vcbResult = await this.fetchDataByCrawledAt(nearestTime);
+        vcbResult["bank"] = "VCB";
       }
     } catch (error) {
       console.log(error);

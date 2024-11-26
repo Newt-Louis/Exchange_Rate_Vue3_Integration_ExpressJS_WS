@@ -38,8 +38,10 @@ class ExchangeData {
   }
   async index(crawledAt) {
     try {
-      const arrayFilter = this.db.find({ crawled_at: crawledAt }).limit(1);
-      const result = await arrayFilter.toArray();
+      const result = await this.db.findOne(
+        { crawled_at: crawledAt },
+        { projection: { _id: 0, data: 1, crawled_at: 1 } }
+      );
       return result;
     } catch (error) {
       throw error;

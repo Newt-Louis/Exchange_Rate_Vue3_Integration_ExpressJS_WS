@@ -12,8 +12,9 @@ class ACBController {
       if (time.checkTime) {
         acbResult = await this.fetchDataByCrawl(time.crawled_at);
       } else {
-        const nearestTime = this.acb.getCrawledAtNearestTime();
+        const nearestTime = await this.acb.getCrawledAtNearestTime();
         acbResult = await this.fetchDataByCrawledAt(nearestTime);
+        acbResult["bank"] = "ACB";
       }
     } catch (error) {
       console.log(error);
