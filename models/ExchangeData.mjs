@@ -36,6 +36,24 @@ class ExchangeData {
       throw error;
     }
   }
+  async index(crawledAt) {
+    try {
+      const arrayFilter = this.db.find({ crawled_at: crawledAt }).limit(1);
+      const result = await arrayFilter.toArray();
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async getArrayCrawledAt() {
+    try {
+      const arrayFilter = this.db.find({}, { crawled_at: 1, _id: 0 });
+      const result = await arrayFilter.toArray();
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
   async getCrawledAtNearestTime() {
     try {
       // const db = await Connection.getCollection(this.database, this.collection);
