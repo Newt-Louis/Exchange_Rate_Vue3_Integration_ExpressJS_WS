@@ -2,8 +2,7 @@ import "dotenv/config";
 import express from "express";
 import fs, { readFile, writeFile } from "node:fs/promises";
 import apiRoute from "./apiresource/index.api.mjs";
-import { scrapACB } from "./puppeteerCrawl/scrapperACB.ppt.mjs";
-import { scrapVCB } from "./puppeteerCrawl/scrapperVCB.ppt.mjs";
+import { crawlData } from "./apiresource/wsRoute.mjs";
 import { WebSocketServer } from "ws";
 
 // Constants
@@ -52,6 +51,12 @@ if (!isProduction) {
   app.use(compression());
   app.use(base, sirv("./dist/client", { extensions: [] }));
 }
+
+// parse application/json
+app.use(express.json());
+// parse application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
+
 // API
 app.use("/api", apiRoute);
 
@@ -113,6 +118,7 @@ wss.on("connection", async (ws, request) => {
   // ws.on("message", function incomming(message) {
   //   console.log(message);
   // });
+  await crawlData(ws, request);
   const serverPing = setInterval(() => {
     ws.ping("", false, error => {
       const serverTimestamp = JSON.stringify({ type: "ping", timestamp: Date.now() });

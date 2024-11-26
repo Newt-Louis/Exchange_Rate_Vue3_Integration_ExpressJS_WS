@@ -15,12 +15,13 @@ export const useWebSocketStore = defineStore("websocket", () => {
     };
     ws.onmessage = event => {
       const data = JSON.parse(event.data);
+      console.log(event);
       if (data?.type === "ping") {
         const clientTimestamp = Date.now();
         const serverTimestamp = data.timestamp;
         delay.value = clientTimestamp - serverTimestamp;
       } else {
-        data.forEach(element => {
+        /*  data.forEach(element => {
           switch (element.bank) {
             case "ACB":
               acbStore.insertACBData(element);
@@ -29,7 +30,15 @@ export const useWebSocketStore = defineStore("websocket", () => {
               vcbStore.insertVCBData(element);
               break;
           }
-        });
+        }); */
+        switch (data.bank) {
+          case "ACB":
+            acbStore.insertACBData(data);
+            break;
+          case "VCB":
+            vcbStore.insertVCBData(data);
+            break;
+        }
       }
     };
     ws.onerror = error => {
