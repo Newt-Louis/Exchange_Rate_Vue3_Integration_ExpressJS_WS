@@ -18,7 +18,7 @@ class ExchangeData {
       data["crawled_at"] = timeOnWebBank;
       // const client = new Connection();
       // const db = await Connection.getCollection(this.database, this.collection);
-      const result = await this.db.insertMany(data);
+      const result = await this.db.insertMany([data]);
       console.log("Insert MongoDB Success", result);
       return result;
     } catch (error) {

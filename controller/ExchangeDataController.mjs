@@ -1,7 +1,7 @@
 import ACBCollection from "../models/ACBCollection.mjs";
 import VCBCollection from "../models/VCBCollection.mjs";
 import { scrapACB, acbBankTime } from "../puppeteerCrawl/scrapperACB.ppt.mjs";
-import { scrapVCB } from "../puppeteerCrawl/scrapperVCB.ppt.mjs";
+import { scrapVCB, vcbBankTime } from "../puppeteerCrawl/scrapperVCB.ppt.mjs";
 
 class ExchangeDataController {
   constructor() {
@@ -18,19 +18,21 @@ class ExchangeDataController {
    * the ExpressJS.Router() object.
    */
   index = async (req, res, next) => {
-    console.log("api get-data trong controller dòng 10");
-    const currentUpdateBankTime = await acbBankTime();
-    const lastCrawled = await this.acb.getCrawledAtNearestTime();
-    if (lastCrawled <= currentUpdateBankTime) {
-      res.status(200).json({ message: "All data was up to date" });
-    } else {
-      let newObjectData = {};
-      const dataACB = await scrapACB();
-      newObjectData["data"] = dataACB.data;
-      newObjectData["crawled_at"] = currentUpdateBankTime;
-      const insertDatabase = await this.acb.storage(newObjectData);
-      res.status(200).json(insertDatabase);
-    }
+    // const result = await vcbBankTime();
+    // res.status(200).json(result);
+    // console.log("api get-data trong controller dòng 10");
+    // const currentUpdateBankTime = await acbBankTime();
+    // const lastCrawled = await this.acb.getCrawledAtNearestTime();
+    // if (lastCrawled <= currentUpdateBankTime) {
+    //   res.status(200).json({ message: "All data was up to date" });
+    // } else {
+    //   let newObjectData = {};
+    //   const dataACB = await scrapACB();
+    //   newObjectData["data"] = dataACB.data;
+    //   newObjectData["crawled_at"] = currentUpdateBankTime;
+    //   const insertDatabase = await this.acb.storage(newObjectData);
+    //   res.status(200).json(insertDatabase);
+    // }
   };
 
   fetch = async (req, res, next) => {

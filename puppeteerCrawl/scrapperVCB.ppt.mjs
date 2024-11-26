@@ -47,3 +47,21 @@ export async function scrapVCB() {
   const result = { bank: "VCB", data: arrayObject };
   return result;
 }
+
+export async function vcbBankTime() {
+  const browser = await startBrowser();
+  const page = await browser.newPage();
+  const link = "https://www.vietcombank.com.vn/vi-VN/KHCN/Cong-cu-Tien-ich/Ty-gia";
+  let result;
+  await page.goto(link, { waitUntil: "load" });
+  await page.waitForSelector("#datePicker");
+  const stringDate = await page.$eval("#datePicker", el => el.value);
+  const regexp = /[0-9]+/g;
+  const arrayDate = stringDate.match(regexp);
+  const day = parseInt(arrayDate[0], 10);
+  const month = parseInt(arrayDate[1], 10) - 1;
+  const year = parseInt(arrayDate[2], 10);
+  result = new Date(year, month, day);
+  await browser.close();
+  return result;
+}
