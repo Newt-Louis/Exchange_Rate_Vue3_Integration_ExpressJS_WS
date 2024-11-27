@@ -16,6 +16,7 @@ export const useACBStore = defineStore("ACB", () => {
     });
     return {
       bank: newData?.bank ?? "unknow bank",
+      crawled_at: newData?.crawled_at ?? "unknown time",
       data: transformData,
     };
   });
