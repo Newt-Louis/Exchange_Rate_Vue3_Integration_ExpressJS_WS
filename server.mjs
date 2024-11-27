@@ -104,21 +104,14 @@ app.use("*", async (req, res) => {
  * Start Websocket Server
  */
 wss.on("connection", async (ws, request) => {
-  // Both writeFile and puppeteer need to be called as async/await, if don't they will only catch null data
-  // const dataACB = await scrapACB();
-  // const dataVCB = await scrapVCB();
-
-  // let crawlData;
-  // try {
-  //   crawlData = await ExchangeData.all();
-  // } catch (error) {
-  //   console.log("có lỗi đọc file khi websocket server thành lập" + error);
-  // }
-  // ws.send(crawlData);
-  // ws.on("message", function incomming(message) {
-  //   console.log(message);
-  // });
+  /** Call for first time */
   await crawlData(ws, request);
+
+  /** Check time every 30 minutes */
+  const scheduleCrawlData = setInterval(async () => {
+    await crawlData(ws, request);
+  }, 1800000);
+
   const serverPing = setInterval(() => {
     ws.ping("", false, error => {
       const serverTimestamp = JSON.stringify({ type: "ping", timestamp: Date.now() });
@@ -133,7 +126,7 @@ wss.on("connection", async (ws, request) => {
     // console.log("nhận pong từ client");
   });
   ws.on("close", () => {
-    clearInterval(serverPing);
+    clearInterval(serverPing, scheduleCrawlData);
   });
 });
 // Emitted when the underlying server has been bound. It's triggered only once when server established

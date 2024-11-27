@@ -1,8 +1,8 @@
 <template>
   <div>
     <a-row>
-      <a-col :span="4"><a class="fake-button" @click="getNewData">Get Data</a></a-col>
-      <a-col :span="4"><a class="fake-button" @click="startCrawlData">Fetch Data</a></a-col>
+      <a-col :span="4"><a class="fake-button">Get Data</a></a-col>
+      <a-col :span="4"><a class="fake-button">Fetch Data</a></a-col>
       <a-col :span="4">Some Link</a-col>
       <a-col :span="2" :offset="10" :style="{ textAlign: 'center' }">Ping: {{ ping }} ms</a-col>
     </a-row>
@@ -17,26 +17,17 @@
   import { useVCBStore } from "../stores/vcb.store.mjs";
   const ping = ref("");
 
+  /** function for mocking test purpose */
   async function getNewData() {
     try {
       const response = await axios.get("/api/exchange-data");
       console.log(response);
-      /* if (response.status === 200) {
-        data.forEach(element => {
-          switch (element.bank) {
-            case "ACB":
-              acbStore.insertACBData(element);
-              break;
-            case "VCB":
-              vcbStore.insertVCBData(element);
-              break;
-          }
-        });
-      } */
     } catch (error) {
       console.log(error);
     }
   }
+
+  /** function for mocking test purpose */
   async function startCrawlData() {
     try {
       const response = await axios.post("/api/start-crawl");

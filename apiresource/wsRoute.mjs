@@ -12,6 +12,10 @@ export async function crawlData(ws, req) {
      * binding Controller
      */
     const bankArray = [new ACBController(), new VCBController()];
+    /**
+     * Send each bank have checked
+     * Not wait until crawl all bank then send all
+     */
     for (let i = 0; i < bankArray.length; i++) {
       const result = await bankArray[i].handlerWebsocket();
       ws.send(JSON.stringify(result));
