@@ -252,11 +252,13 @@
               <img
                 v-if="conversionedResult.imglink"
                 :src="conversionedResult.imglink"
-                :alt="conversionedResult.name"
+                :alt="conversionedResult.curInstance?.title"
                 width="70px"
                 height="70px"
               />
-              <a-typography-title :level="2" style="margin-bottom: 0">{{ conversionedResult.name }}</a-typography-title>
+              <a-typography-title :level="2" style="margin-bottom: 0">{{
+                conversionedResult.curInstance?.title
+              }}</a-typography-title>
             </a-flex>
             <a-input-number
               v-model:value="amoutInputValue"
