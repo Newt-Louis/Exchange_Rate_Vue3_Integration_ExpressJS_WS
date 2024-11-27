@@ -26,9 +26,11 @@
   const amoutInputValue = ref();
   const conversionedResult = reactive({
     imglink: "",
-    name: "",
-    vndCurrency: "",
-    anotherCurrency: "",
+    curInstance: {},
+    vndCurrencyCash: 0,
+    vndCurrencyTransfer: 0,
+    currencyToChangeCash: 0,
+    currencyToChangeTransfer: 0,
   });
   const displayBankCurrency = computed(() => {
     let bankData;
@@ -74,7 +76,7 @@
           currencyDisplay = currencyDisplayConversion.find(cur => cur.name === newCurrencySelected);
           if (currencyInstance) {
             conversionedResult.imglink = currencyDisplay?.imglink ?? "";
-            conversionedResult.name = newCurrencySelected;
+            conversionedResult.curInstance = currencyInstance;
           }
           break;
 
@@ -84,19 +86,108 @@
           currencyDisplay = currencyDisplayConversion.find(cur => cur.name === newCurrencySelected);
           if (currencyInstance) {
             conversionedResult.imglink = currencyDisplay?.imglink ?? "";
-            conversionedResult.name = newCurrencySelected;
+            conversionedResult.curInstance = currencyInstance;
           }
           break;
         default:
           break;
       }
+      handleOnInputAmount();
     }
   );
+  /**
+   * Depend on swap conversion to excute logic exchange money
+   * price to exchange is still VND but it's means that how many VND
+   * can be changed to a unit by that chosen currency
+   */
   function handleOnInputAmount() {
-    console.log(amoutInputValue.value);
+    // isVNDConversion.value = true means sell VND to chosen currency
+    if (amoutInputValue.value === undefined || amoutInputValue.value === null || amoutInputValue.value === "") {
+      conversionedResult.currencyToChangeCash = 0;
+      conversionedResult.currencyToChangeTransfer = 0;
+      conversionedResult.vndCurrencyCash = 0;
+      conversionedResult.vndCurrencyTransfer = 0;
+      return;
+    }
+    if (!conversionedResult.curInstance) {
+      conversionedResult.currencyToChangeCash = 0;
+      conversionedResult.currencyToChangeTransfer = 0;
+      conversionedResult.vndCurrencyCash = 0;
+      conversionedResult.vndCurrencyTransfer = 0;
+      return;
+    }
+    conversionedResult.currencyToChangeCash = sellVNDToChosenCurrency(
+      amoutInputValue.value,
+      conversionedResult.curInstance?.buyCash
+    );
+    conversionedResult.currencyToChangeTransfer = sellVNDToChosenCurrency(
+      amoutInputValue.value,
+      conversionedResult.curInstance?.buyTransfer
+    );
+    conversionedResult.vndCurrencyCash = buyVNDToChosenCurrency(
+      amoutInputValue.value,
+      conversionedResult.curInstance?.sellCash
+    );
+    conversionedResult.vndCurrencyTransfer = buyVNDToChosenCurrency(
+      amoutInputValue.value,
+      conversionedResult.curInstance?.sellTransfer
+    );
+    console.log(conversionedResult);
   }
+  /**
+   * Swap mean get money exchange between buy or sell with the bank
+   */
   function handleOnSwapConversion() {
     isVNDConversion.value = !isVNDConversion.value;
+  }
+
+  /**
+   * casting string-number from curInstance to Number
+   * @param {String} stringNumber
+   */
+  function castStringToNumber(stringNumber) {
+    const controlStringNumberRegexp = /^[\d,.]+\d$/;
+    if (stringNumber === "-") {
+      return "None";
+    }
+    if (controlStringNumberRegexp.test(stringNumber)) {
+      const clearCommas = stringNumber.replace(/,/g, "");
+      return parseFloat(clearCommas);
+    }
+  }
+
+  /**
+   * function sell VND to chosen currency
+   * @param {Number} vndInputAmount
+   * @param {String} vndToChange
+   */
+  function sellVNDToChosenCurrency(vndInputAmout, vndToChange) {
+    let priceToExchange = castStringToNumber(vndToChange);
+    if (!vndToChange) {
+      return 0;
+    }
+    if (priceToExchange === "None") {
+      return 0;
+    }
+    let result = Math.round((vndInputAmout / priceToExchange) * 1000) / 1000;
+    return result;
+  }
+
+  /**
+   * function exchange VND to chosen currency
+   * @param {Number} currencyInputAmout
+   * @param {String} vndToChange
+   */
+  function buyVNDToChosenCurrency(currencyInputAmout, vndToChange) {
+    let priceToExchange = castStringToNumber(vndToChange);
+    if (!vndToChange) {
+      return 0;
+    }
+    if (priceToExchange === "None") {
+      return 0;
+    }
+    let result = Math.round(currencyInputAmout * priceToExchange * 1000) / 1000;
+    return result;
   }
 </script>
 
@@ -148,17 +239,25 @@
               <a-typography-title :level="2" style="margin-bottom: 0">VND</a-typography-title>
             </a-flex>
             <a-flex align="center" justify="space-around" v-else>
-              <img :src="conversionedResult.imglink" :alt="conversionedResult.name" width="70px" height="70px" />
+              <img
+                v-if="conversionedResult.imglink"
+                :src="conversionedResult.imglink"
+                :alt="conversionedResult.name"
+                width="70px"
+                height="70px"
+              />
               <a-typography-title :level="2" style="margin-bottom: 0">{{ conversionedResult.name }}</a-typography-title>
             </a-flex>
-            <a-input
+            <a-input-number
               v-model:value="amoutInputValue"
+              :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+              :parser="value => value.replace(/\$\s?|(,*)/g, '')"
               :bordered="false"
               size="large"
               placeholder="Input the amount here ..."
-              style="font-size: 18px"
+              style="font-size: 18px; width: 100%"
               @input="handleOnInputAmount"
-            ></a-input>
+            />
           </div>
         </a-col>
         <a-col :span="4">
@@ -167,16 +266,53 @@
         <a-col :span="10">
           <div class="card-currency">
             <a-flex align="center" justify="space-around" v-if="isVNDConversion">
-              <img :src="conversionedResult.imglink" :alt="conversionedResult.name" width="70px" height="70px" />
-              <a-typography-title :level="2" style="margin-bottom: 0">{{ conversionedResult.name }}</a-typography-title>
+              <img
+                v-if="conversionedResult.imglink"
+                :src="conversionedResult.imglink"
+                :alt="conversionedResult.curInstance?.title"
+                width="70px"
+                height="70px"
+              />
+              <a-typography-title :level="2" style="margin-bottom: 0">{{
+                conversionedResult.curInstance?.title
+              }}</a-typography-title>
             </a-flex>
             <a-flex align="center" justify="space-around" v-else>
               <img src="/src/assets/imgForeignCurrency/im-flag-vnd.svg" alt="vnd-currency" width="70px" height="70px" />
               <a-typography-title :level="2" style="margin-bottom: 0">VND</a-typography-title>
             </a-flex>
-            <a-typography-text style="font-size: 24px; text-align: center"
-              >{{ conversionedResult.anotherCurrency }}20000</a-typography-text
-            >
+            <article v-if="isVNDConversion">
+              <a-flex align="center">
+                <a-typography-title :level="5" style="margin-bottom: 0; margin-right: 12px">Cash: </a-typography-title>
+                <a-typography-text style="font-size: 24px; text-align: center">
+                  {{ conversionedResult.currencyToChangeCash }}
+                </a-typography-text>
+              </a-flex>
+              <a-flex align="center">
+                <a-typography-title :level="5" style="margin-bottom: 0; margin-right: 12px">
+                  Transfer:
+                </a-typography-title>
+                <a-typography-text style="font-size: 24px; text-align: center">
+                  {{ conversionedResult.currencyToChangeTransfer }}
+                </a-typography-text>
+              </a-flex>
+            </article>
+            <article v-else>
+              <a-flex align="center">
+                <a-typography-title :level="5" style="margin-bottom: 0; margin-right: 12px">Cash: </a-typography-title>
+                <a-typography-text style="font-size: 24px; text-align: center">
+                  {{ conversionedResult.vndCurrencyCash }}
+                </a-typography-text>
+              </a-flex>
+              <a-flex align="center">
+                <a-typography-title :level="5" style="margin-bottom: 0; margin-right: 12px">
+                  Transfer:
+                </a-typography-title>
+                <a-typography-text style="font-size: 24px; text-align: center">
+                  {{ conversionedResult.vndCurrencyTransfer }}
+                </a-typography-text>
+              </a-flex>
+            </article>
           </div>
         </a-col>
       </a-row>
@@ -196,7 +332,7 @@
   .card-currency {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     height: 150px;
   }
 </style>
