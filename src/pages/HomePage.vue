@@ -189,6 +189,16 @@
     let result = Math.round(currencyInputAmout * priceToExchange * 1000) / 1000;
     return result;
   }
+  /**
+   * casting number into string with commas to render on browser
+   * @param {Number} number
+   */
+  function formattedNumber(number) {
+    let changeNumberToString = number + "";
+    const regexp = /\B(?=(\d{3})+(?!\d))/g;
+    let result = changeNumberToString.replace(regexp, ",");
+    return result;
+  }
 </script>
 
 <template>
@@ -285,7 +295,7 @@
               <a-flex align="center">
                 <a-typography-title :level="5" style="margin-bottom: 0; margin-right: 12px">Cash: </a-typography-title>
                 <a-typography-text style="font-size: 24px; text-align: center">
-                  {{ conversionedResult.currencyToChangeCash }}
+                  {{ formattedNumber(conversionedResult.currencyToChangeCash) }}
                 </a-typography-text>
               </a-flex>
               <a-flex align="center">
@@ -293,7 +303,7 @@
                   Transfer:
                 </a-typography-title>
                 <a-typography-text style="font-size: 24px; text-align: center">
-                  {{ conversionedResult.currencyToChangeTransfer }}
+                  {{ formattedNumber(conversionedResult.currencyToChangeTransfer) }}
                 </a-typography-text>
               </a-flex>
             </article>
@@ -301,7 +311,7 @@
               <a-flex align="center">
                 <a-typography-title :level="5" style="margin-bottom: 0; margin-right: 12px">Cash: </a-typography-title>
                 <a-typography-text style="font-size: 24px; text-align: center">
-                  {{ conversionedResult.vndCurrencyCash }}
+                  {{ formattedNumber(conversionedResult.vndCurrencyCash) }}
                 </a-typography-text>
               </a-flex>
               <a-flex align="center">
@@ -309,7 +319,7 @@
                   Transfer:
                 </a-typography-title>
                 <a-typography-text style="font-size: 24px; text-align: center">
-                  {{ conversionedResult.vndCurrencyTransfer }}
+                  {{ formattedNumber(conversionedResult.vndCurrencyTransfer) }}
                 </a-typography-text>
               </a-flex>
             </article>
