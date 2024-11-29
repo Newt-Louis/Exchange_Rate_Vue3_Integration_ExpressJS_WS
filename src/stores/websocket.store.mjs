@@ -20,16 +20,6 @@ export const useWebSocketStore = defineStore("websocket", () => {
         const serverTimestamp = data.timestamp;
         delay.value = clientTimestamp - serverTimestamp;
       } else {
-        /*  data.forEach(element => {
-          switch (element.bank) {
-            case "ACB":
-              acbStore.insertACBData(element);
-              break;
-            case "VCB":
-              vcbStore.insertVCBData(element);
-              break;
-          }
-        }); */
         switch (data.bank) {
           case "ACB":
             acbStore.insertACBData(data);

@@ -1,5 +1,4 @@
 import Connection from "./Connect.mjs";
-import { formattedDate } from "../plugin/utitlities.plugin.mjs";
 
 class ExchangeData {
   constructor(database, collection) {

@@ -64,7 +64,7 @@
 </template>
 
 <script setup>
-  import { computed, nextTick, onBeforeMount, onMounted, ref, watch, watchEffect } from "vue";
+  import { onBeforeMount, ref, watch, watchEffect } from "vue";
   /* currencyData is now a new variable with memory created
   from the server including all the data of the json file,
   vite will automatically convert the json data into javascript data.  */
